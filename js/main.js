@@ -324,6 +324,10 @@ window.NMOnePoint.detailUrl = function detailUrl(slug) {
     return "service.html?service=" + encodeURIComponent(slug);
 };
 
+window.NMOnePoint.categoryUrl = function categoryUrl(key) {
+    return "category.html?category=" + encodeURIComponent(key);
+};
+
 /* Navigation display taxonomy: 6 dropdown labels mapped onto the 5 genuine
    data categories. Labels use the exact approved names; anchors reuse the
    existing category IDs; service membership references slugs (no duplicated
@@ -462,27 +466,9 @@ window.NMOnePoint.renderMegaMenu = async function renderMegaMenu() {
             groups
                 .map(
                     (group) =>
-                        '<div class="drop-cat" data-cat="' + escapeHtml(group.key) + '">' +
-                        '<div class="drop-cat-row">' +
-                        '<a class="drop-cat-link" href="' + escapeHtml(group.anchor) + '">' +
+                        '<a class="drop-cat-link" href="' + escapeHtml(window.NMOnePoint.categoryUrl(group.key)) + '">' +
                         escapeHtml(group.label) +
-                        '<svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 4l4 4-4 4"/></svg>' +
-                        "</a>" +
-                        '<button class="drop-sub-toggle" type="button" aria-expanded="false" aria-controls="drop-items-' + escapeHtml(group.key) + '" aria-label="Show ' + escapeHtml(group.label) + ' services" data-mega-cat-toggle>' +
-                        '<svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 6l4 4 4-4"/></svg>' +
-                        "</button>" +
-                        "</div>" +
-                        '<ul class="drop-sub" id="drop-items-' + escapeHtml(group.key) + '">' +
-                        group.items
-                            .map(
-                                (service) =>
-                                    '<li><a href="' + escapeHtml(window.NMOnePoint.detailUrl(service.slug)) + '">' +
-                                    escapeHtml(service.name) +
-                                    "</a></li>"
-                            )
-                            .join("") +
-                        "</ul>" +
-                        "</div>"
+                        "</a>"
                 )
                 .join("") +
             "</div>";
@@ -649,6 +635,69 @@ window.NMOnePoint.renderServiceDetail = async function renderServiceDetail() {
     }
 };
 
+window.NMOnePoint.renderCategoryDetail = async function renderCategoryDetail() {
+    const mount = document.querySelector("[data-category-detail]");
+    if (!mount) {
+        return;
+    }
+
+    const escapeHtml = window.NMOnePoint.escapeHtml;
+    const params = new URLSearchParams(window.location.search || "");
+    const key = params.get("category") || "";
+
+    try {
+        const groups = await window.NMOnePoint.buildNavGroups();
+        const group = groups.filter((item) => item.key === key)[0];
+
+        if (!group) {
+            mount.innerHTML =
+                '<p class="eyebrow">Service category</p>' +
+                "<h1>Category not found</h1>" +
+                '<p class="section-lead">The requested category could not be matched. Browse the <a href="services.html">full service directory</a>.</p>';
+            return;
+        }
+
+        const built = await window.NMOnePoint.buildServiceIndex();
+        const firstCategoryId = group.items.length ? group.items[0].categoryId : "";
+        const dataCategory = built.categories.filter((cat) => cat.id === firstCategoryId)[0] || {};
+        const tagline = dataCategory.tagline || "";
+
+        document.title = group.label + " | NM OnePoint Services";
+        const metaDescription = document.querySelector('meta[name="description"]');
+        if (metaDescription) {
+            metaDescription.setAttribute(
+                "content",
+                group.label + " at NM OnePoint Services: " + group.items.length + " listed services. One Point. Multiple Solutions."
+            );
+        }
+
+        mount.innerHTML =
+            '<nav class="detail-crumb" aria-label="Breadcrumb"><a href="index.html">Home</a> <span aria-hidden="true">/</span> <a href="services.html">Services</a> <span aria-hidden="true">/</span> <span>' + escapeHtml(group.label) + "</span></nav>" +
+            '<p class="eyebrow">' + group.items.length + ' listed services</p>' +
+            "<h1>" + escapeHtml(group.label) + "</h1>" +
+            (tagline ? '<p class="section-lead">' + escapeHtml(tagline) + "</p>" : "") +
+            '<ul class="dir-list">' +
+            group.items
+                .map(
+                    (service) =>
+                        '<li data-dir-item><a href="' + escapeHtml(window.NMOnePoint.detailUrl(service.slug)) + '">' +
+                        escapeHtml(service.name) +
+                        '<span aria-hidden="true">&rarr;</span></a></li>'
+                )
+                .join("") +
+            "</ul>" +
+            '<div class="cta-actions">' +
+            '<a class="btn btn-primary" href="contact.html">Discuss these services <span class="btn-arrow" aria-hidden="true">&rarr;</span></a>' +
+            '<a class="btn btn-dark" href="https://wa.me/919443273957" rel="noopener">WhatsApp</a>' +
+            "</div>";
+    } catch (error) {
+        console.warn("Category detail failed to load:", error);
+        mount.innerHTML =
+            "<h1>Service category</h1>" +
+            '<p class="section-lead">Category information could not be loaded. See the <a href="services.html">service directory</a>.</p>';
+    }
+};
+
 window.NMOnePoint.init = async function init() {
     await window.NMOnePoint.loadComponent(
         '[data-component="header"]',
@@ -711,6 +760,17 @@ window.NMOnePoint.init = async function init() {
             await window.NMOnePoint.renderServiceDetail();
         } catch (error) {
             console.warn("Service detail render failed:", error);
+        }
+    }
+
+    if (
+        window.NMOnePoint.renderCategoryDetail &&
+        typeof window.NMOnePoint.renderCategoryDetail === "function"
+    ) {
+        try {
+            await window.NMOnePoint.renderCategoryDetail();
+        } catch (error) {
+            console.warn("Category detail render failed:", error);
         }
     }
 

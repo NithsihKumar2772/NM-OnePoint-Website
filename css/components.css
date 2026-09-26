@@ -1462,7 +1462,7 @@ form select:focus {
     display: none;
 }
 
-/* ---------- Services dropdown (compact) + flyout submenus ---------- */
+/* ---------- Services dropdown (compact single panel) ---------- */
 
 .nav-item-has-mega {
     position: relative;
@@ -1529,14 +1529,6 @@ form select:focus {
     padding: var(--space-sm);
 }
 
-.drop-cat {
-    position: relative;
-}
-
-.drop-cat-row {
-    display: contents;
-}
-
 .drop-cat-link {
     display: flex;
     align-items: center;
@@ -1555,161 +1547,6 @@ form select:focus {
 
 .drop-cat-link::after {
     display: none;
-}
-
-.drop-cat-link svg {
-    color: var(--color-muted);
-    flex: none;
-    transition: transform var(--transition-fast), color var(--transition-fast);
-}
-
-.drop-cat:hover .drop-cat-link,
-.drop-cat:focus-within .drop-cat-link {
-    background: var(--color-surface);
-    color: var(--color-accent-ink) !important;
-}
-
-.drop-cat:hover .drop-cat-link svg,
-.drop-cat:focus-within .drop-cat-link svg {
-    color: var(--color-accent-ink);
-    transform: translateX(3px);
-}
-
-.drop-sub-toggle {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 44px;
-    height: 44px;
-    flex: none;
-    border: none;
-    border-radius: var(--radius-sm);
-    background: transparent;
-    color: var(--color-muted);
-    cursor: pointer;
-    transition: background var(--transition-fast), color var(--transition-fast),
-        transform 200ms ease;
-}
-
-.drop-sub-toggle:hover {
-    background: var(--color-surface);
-    color: var(--color-accent-ink);
-}
-
-.drop-sub-toggle[aria-expanded="true"] {
-    transform: rotate(90deg);
-    color: var(--color-accent-ink);
-}
-
-/* Compact second-level flyout: one category at a time, single column.
-   Mobile accordion overrides this further below. */
-
-.drop-sub {
-    position: absolute;
-    top: -6px;
-    left: calc(100% + 10px);
-    min-width: 270px;
-    max-width: 300px;
-    max-height: 60vh;
-    overflow-y: auto;
-    list-style: none;
-    margin: 0;
-    padding: var(--space-sm);
-    background: var(--color-background);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-    box-shadow: var(--shadow-lg);
-    visibility: hidden;
-    opacity: 0;
-    transform: translateX(-6px);
-    transition: opacity 180ms ease, transform 180ms ease, visibility 0s linear 180ms;
-    pointer-events: none;
-    z-index: var(--z-nav);
-}
-
-.drop-cat:hover .drop-sub,
-.drop-cat:focus-within .drop-sub,
-.drop-cat.open .drop-sub {
-    visibility: visible;
-    opacity: 1;
-    transform: none;
-    transition: opacity 180ms ease, transform 180ms ease;
-    pointer-events: auto;
-}
-
-/* Viewport guard: flip the flyout left when near the right edge. */
-
-.flip-flyouts .drop-sub {
-    left: auto;
-    right: calc(100% + 10px);
-    transform: translateX(6px);
-}
-
-.flip-flyouts .drop-cat:hover .drop-sub,
-.flip-flyouts .drop-cat:focus-within .drop-sub,
-.flip-flyouts .drop-cat.open .drop-sub {
-    transform: none;
-}
-
-
-
-
-
-
-
-
-
-
-
-.drop-sub a {
-    display: block;
-    min-height: 44px;
-    padding: 0.55rem var(--space-md);
-    border-radius: var(--radius-sm);
-    font-size: 0.88rem;
-    color: var(--color-text) !important;
-    text-decoration: none;
-    transition: background var(--transition-fast), color var(--transition-fast);
-}
-
-.drop-sub a::after {
-    display: none;
-}
-
-.drop-sub a:hover {
-    background: var(--color-surface);
-    color: var(--color-accent-ink) !important;
-}
-
-.drop-all {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--space-md);
-    margin-top: var(--space-xs);
-    padding: 0.7rem var(--space-md);
-    border-top: 1px solid var(--color-border);
-    border-radius: 0 0 var(--radius-sm) var(--radius-sm);
-    color: var(--color-accent-ink) !important;
-    font-weight: var(--font-weight-bold);
-    font-size: 0.9rem;
-    text-decoration: none;
-    white-space: nowrap;
-}
-
-.drop-all::after {
-    display: none;
-}
-
-.drop-all:hover {
-    background: var(--color-surface);
-}
-
-.nav-whatsapp a {
-    border: 1px solid rgba(45, 212, 191, 0.5);
-    border-radius: var(--radius-pill);
-    color: var(--color-mint) !important;
-    margin-left: var(--space-xs);
 }
 
 .nav-whatsapp a::after {
