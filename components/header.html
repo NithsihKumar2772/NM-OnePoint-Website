@@ -1,8 +1,8 @@
 <header class="site-header">
     <div class="container site-header-inner">
-        <a class="site-brand" href="index.html">NM OnePoint Services</a>
+        <a class="site-brand" href="index.html"><span class="site-brand-mark" aria-hidden="true">NP</span>NM OnePoint Services</a>
         <nav class="site-nav" aria-label="Primary">
-            <ul data-nav-menu>
+            <ul data-nav-menu id="primary-menu">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="about.html">About</a></li>
                 <li><a href="services.html">Services</a></li>
@@ -10,5 +10,9 @@
                 <li><a href="contact.html">Contact</a></li>
             </ul>
         </nav>
+        <div class="header-actions">
+            <a class="btn btn-primary btn-small header-cta" href="contact.html">Contact Us</a>
+            <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="primary-menu" aria-label="Toggle navigation">Menu</button>
+        </div>
     </div>
 </header>

@@ -1,5 +1,53 @@
 /* Responsive foundations. Mobile-first. No framework. */
 
+@media (max-width: 860px) {
+    .nav-toggle {
+        display: inline-block;
+    }
+
+    .site-nav ul[data-nav-menu][hidden] {
+        display: none;
+    }
+
+    .site-nav ul[data-nav-menu] {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+        background: var(--color-background);
+        border-bottom: 1px solid var(--color-border);
+        padding: var(--space-sm) var(--container-padding) var(--space-md);
+        z-index: var(--z-nav);
+    }
+
+    .site-nav ul[data-nav-menu] a {
+        display: block;
+        padding: var(--space-sm) var(--space-xs);
+    }
+
+    .site-header-inner {
+        flex-wrap: wrap;
+    }
+
+    .header-cta {
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-actions .btn {
+        width: 100%;
+        text-align: center;
+    }
+
+    .cta-band {
+        padding: var(--space-xl) var(--space-md);
+    }
+}
+
 @media (min-width: 768px) {
     :root {
         --container-padding: 1.5rem;
@@ -10,17 +58,60 @@
     }
 
     .hero h1 {
-        font-size: 2.5rem;
+        font-size: var(--font-size-hero);
+    }
+
+    .split-grid,
+    .showcase-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .why-grid,
+    .process-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .footer-grid {
+        grid-template-columns: repeat(2, 1fr);
     }
 }
 
 @media (min-width: 1024px) {
     .card-grid {
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .card-grid-four {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    .hero-grid {
+        grid-template-columns: 1.1fr 0.9fr;
     }
 
     .section-title {
         font-size: 1.75rem;
+    }
+
+    .why-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .process-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    .footer-grid {
+        grid-template-columns: 1.4fr 1fr 1fr 1fr;
+    }
+
+    .contact-grid {
+        grid-template-columns: 1.2fr 0.8fr;
+        align-items: start;
     }
 }
 
@@ -30,14 +121,9 @@
     }
 }
 
-@media (max-width: 480px) {
-    .site-header-inner {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .hero-actions .btn {
-        width: 100%;
-        text-align: center;
+@media (min-width: 1920px) {
+    .hero {
+        padding-top: var(--space-xxxl);
+        padding-bottom: var(--space-xxxl);
     }
 }

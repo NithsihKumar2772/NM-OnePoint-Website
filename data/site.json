@@ -1,1 +1,20 @@
-{"companyName": "NM OnePoint Services", "contact": {"email": "[placeholder]", "phone": "[placeholder]", "address": "[placeholder]"}, "note": "Placeholder values only. Real business information has not yet been provided.", "social": {"linkedin": "[placeholder]", "x": "[placeholder]", "facebook": "[placeholder]"}}
+{
+    "companyName": "NM OnePoint Services",
+    "contact": {
+        "email": "[placeholder]",
+        "phone": "[placeholder]",
+        "address": "[placeholder]"
+    },
+    "note": "Placeholder values only. Real business information has not yet been provided.",
+    "social": {
+        "linkedin": "[placeholder]",
+        "x": "[placeholder]",
+        "facebook": "[placeholder]"
+    },
+    "stats": [
+        { "value": "04", "label": "Service categories" },
+        { "value": "02", "label": "Practice sides, business and technical" },
+        { "value": "04", "label": "Defined workflow steps" },
+        { "value": "01", "label": "Single point of contact" }
+    ]
+}

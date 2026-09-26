@@ -1,1 +1,33 @@
-{"note": "Placeholder foundation file. Real services have not yet been provided.", "services": []}
+{
+    "note": "Homepage service categories. Items reflect the positioning and scope provided for the homepage implementation.",
+    "services": [
+        {
+            "id": "business-tax",
+            "icon": "briefcase",
+            "title": "Business & Tax",
+            "tagline": "Day-to-day business and compliance support.",
+            "items": ["GST", "Udyam", "Professional Tax", "Business support"]
+        },
+        {
+            "id": "it-solutions",
+            "icon": "cpu",
+            "title": "IT Solutions",
+            "tagline": "Practical technology support for daily operations.",
+            "items": ["Business IT support", "Systems & tools", "Documentation", "Coordination"]
+        },
+        {
+            "id": "bim-services",
+            "icon": "cube",
+            "title": "BIM Services",
+            "tagline": "Model-based support for building projects.",
+            "items": ["BIM", "Scan to BIM", "Revit"]
+        },
+        {
+            "id": "gis-solutions",
+            "icon": "globe",
+            "title": "GIS Solutions",
+            "tagline": "Map-based data support for planning and records.",
+            "items": ["GIS", "QGIS / ArcGIS", "Spatial data support"]
+        }
+    ]
+}

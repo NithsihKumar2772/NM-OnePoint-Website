@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Contact NM OnePoint Services — share the details of your business or technical requirement through the enquiry form.">
+    <title>Contact | NM OnePoint Services</title>
+
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Contact NM OnePoint Services">
+    <meta property="og:description" content="Share the details of your business or technical requirement through the NM OnePoint enquiry form.">
+    <meta name="theme-color" content="#0e2a47">
+
+    <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+    <link rel="manifest" href="site.webmanifest">
+
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+
+    <div data-component="header">
+        <noscript>
+            <header class="site-header">
+                <div class="container site-header-inner">
+                    <a class="site-brand" href="index.html">NM OnePoint Services</a>
+                    <nav class="site-nav" aria-label="Primary">
+                        <ul>
+                            <li><a href="index.html">Home</a></li>
+                            <li><a href="about.html">About</a></li>
+                            <li><a href="services.html">Services</a></li>
+                            <li><a href="projects.html">Projects</a></li>
+                            <li><a href="contact.html" aria-current="page">Contact</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </header>
+        </noscript>
+    </div>
+
+    <main id="main-content" class="site-main">
+        <section class="page-hero" aria-labelledby="page-title">
+            <div class="container">
+                <p class="eyebrow eyebrow-light">Contact</p>
+                <h1 id="page-title" data-reveal>Contact NM OnePoint</h1>
+                <p class="page-lead">Share the details of your business or technical requirement, and NM OnePoint will take it from there.</p>
+            </div>
+        </section>
+
+        <section class="section" aria-labelledby="enquiry-title">
+            <div class="container contact-grid">
+                <div>
+                    <div class="section-head">
+                        <p class="eyebrow">Enquiry form</p>
+                        <h2 class="section-title" id="enquiry-title" data-reveal>Send an enquiry</h2>
+                        <p class="section-lead">Demonstration form: entries are validated in your browser and are not sent anywhere yet. A submission backend will be connected later.</p>
+                    </div>
+                    <form data-contact-form action="#" method="post">
+                        <div class="form-field">
+                            <label for="contact-name">Name</label>
+                            <input type="text" id="contact-name" name="name" autocomplete="name" required>
+                        </div>
+                        <div class="form-field">
+                            <label for="contact-email">Email</label>
+                            <input type="email" id="contact-email" name="email" autocomplete="email" required>
+                        </div>
+                        <div class="form-field">
+                            <label for="contact-service">Service needed</label>
+                            <select id="contact-service" name="service" required>
+                                <option value="">Select a service&hellip;</option>
+                                <option value="business-tax">Business &amp; Tax</option>
+                                <option value="it-solutions">IT Solutions</option>
+                                <option value="bim-services">BIM Services</option>
+                                <option value="gis-solutions">GIS Solutions</option>
+                                <option value="other">Other / general enquiry</option>
+                            </select>
+                        </div>
+                        <div class="form-field">
+                            <label for="contact-message">Requirement details</label>
+                            <textarea id="contact-message" name="message" rows="6" required></textarea>
+                        </div>
+                        <p class="form-status" data-form-status role="status" hidden></p>
+                        <button class="btn btn-primary" type="submit">Send enquiry</button>
+                    </form>
+                </div>
+                <aside class="contact-aside" aria-labelledby="info-title" data-reveal>
+                    <h2 class="section-title" id="info-title">Contact information</h2>
+                    <p>Direct contact details will be published here once verified.</p>
+                    <ul class="card-list">
+                        <li>Phone: [placeholder]</li>
+                        <li>Email: [placeholder]</li>
+                        <li>Address: [placeholder]</li>
+                    </ul>
+                    <p>Meanwhile, see <a href="services.html">what we do</a> or read <a href="index.html#faq-title">frequently asked questions</a>.</p>
+                </aside>
+            </div>
+        </section>
+    </main>
+
+    <div data-component="footer">
+        <noscript>
+            <footer class="site-footer">
+                <div class="container">
+                    <p>&copy; 2026 NM OnePoint Services</p>
+                </div>
+            </footer>
+        </noscript>
+    </div>
+
+    <script src="js/navigation.js" defer></script>
+    <script src="js/animations.js" defer></script>
+    <script src="js/forms.js" defer></script>
+    <script src="js/main.js" defer></script>
+</body>
+</html>

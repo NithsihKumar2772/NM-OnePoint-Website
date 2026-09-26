@@ -1,0 +1,11 @@
+{
+  "name": "NM OnePoint Services",
+  "short_name": "NM OnePoint",
+  "description": "One point for business and technical solutions: business and tax support, IT solutions, BIM and GIS services.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f4f6f9",
+  "theme_color": "#0e2a47",
+  "icons": []
+}

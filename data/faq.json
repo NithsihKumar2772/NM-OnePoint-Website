@@ -1,0 +1,30 @@
+{
+    "note": "Homepage FAQ entries. Wording stays within the provided homepage scope; no unsupported claims.",
+    "faqs": [
+        {
+            "id": "services-offered",
+            "question": "What services does NM OnePoint provide?",
+            "answer": "NM OnePoint covers business and tax support, IT solutions, BIM services including Scan to BIM and Revit, and GIS solutions including QGIS and ArcGIS work."
+        },
+        {
+            "id": "multiple-services",
+            "question": "Can I request multiple services together?",
+            "answer": "Yes. Business and technical needs can be discussed together, so related requirements stay coordinated through one point of contact."
+        },
+        {
+            "id": "bim-gis",
+            "question": "Do you provide BIM and GIS services?",
+            "answer": "Yes. BIM support includes model-based building workflows, Scan to BIM, and Revit. GIS support includes map-based data work with QGIS and ArcGIS."
+        },
+        {
+            "id": "custom-support",
+            "question": "Can businesses request customized support?",
+            "answer": "Yes. Scope, deliverables, and timelines are agreed before work begins, so each engagement reflects the specific requirement."
+        },
+        {
+            "id": "contact",
+            "question": "How can I contact NM OnePoint?",
+            "answer": "Use the Contact page to share the details of your business or technical requirement, and NM OnePoint will take it from there."
+        }
+    ]
+}
