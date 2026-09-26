@@ -3,26 +3,125 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="NM OnePoint Services">
-    <title>NM OnePoint Services</title>
+    <meta name="description" content="NM OnePoint Services — professional services website foundation.">
+    <title>NM OnePoint Services | Home</title>
+
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="NM OnePoint Services">
+    <meta property="og:description" content="NM OnePoint Services — professional services website foundation.">
 
     <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/responsive.css">
 </head>
 <body>
 
-    <header>
-        <h1>NM OnePoint Services</h1>
-    </header>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
 
-    <main>
-        <h2>Website Under Development</h2>
-        <p>Our new website is being built.</p>
+    <div data-component="header">
+        <noscript>
+            <header class="site-header">
+                <div class="container site-header-inner">
+                    <a class="site-brand" href="index.html">NM OnePoint Services</a>
+                    <nav class="site-nav" aria-label="Primary">
+                        <ul>
+                            <li><a href="index.html" aria-current="page">Home</a></li>
+                            <li><a href="about.html">About</a></li>
+                            <li><a href="services.html">Services</a></li>
+                            <li><a href="projects.html">Projects</a></li>
+                            <li><a href="contact.html">Contact</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </header>
+        </noscript>
+    </div>
+
+    <main id="main-content" class="site-main">
+        <section class="hero" aria-labelledby="hero-title">
+            <div class="container">
+                <h1 id="hero-title" data-reveal>NM OnePoint Services</h1>
+                <p>Professional website foundation. Final visual design and business content will be added incrementally.</p>
+                <div class="hero-actions">
+                    <a class="btn btn-primary" href="services.html">View Services</a>
+                    <a class="btn btn-secondary" href="contact.html">Contact Us</a>
+                </div>
+                <div class="placeholder-media" role="img" aria-label="Hero image placeholder">[Hero image placeholder]</div>
+            </div>
+        </section>
+
+        <section class="section" aria-labelledby="services-preview-title">
+            <div class="container">
+                <h2 class="section-title" id="services-preview-title" data-reveal>Services Preview</h2>
+                <p class="section-lead">Service content will be loaded from shared data in a later step.</p>
+                <div class="card-grid">
+                    <article class="card" data-reveal>
+                        <h3>Service placeholder 1</h3>
+                        <p>Short description placeholder.</p>
+                        <a href="services.html">Learn more</a>
+                    </article>
+                    <article class="card" data-reveal>
+                        <h3>Service placeholder 2</h3>
+                        <p>Short description placeholder.</p>
+                        <a href="services.html">Learn more</a>
+                    </article>
+                    <article class="card" data-reveal>
+                        <h3>Service placeholder 3</h3>
+                        <p>Short description placeholder.</p>
+                        <a href="services.html">Learn more</a>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" aria-labelledby="projects-preview-title">
+            <div class="container">
+                <h2 class="section-title" id="projects-preview-title" data-reveal>Projects Preview</h2>
+                <p class="section-lead">Project content will be loaded from shared data in a later step.</p>
+                <div class="card-grid">
+                    <article class="card" data-reveal>
+                        <h3>Project placeholder 1</h3>
+                        <p>Short description placeholder.</p>
+                        <a href="projects.html">View project</a>
+                    </article>
+                    <article class="card" data-reveal>
+                        <h3>Project placeholder 2</h3>
+                        <p>Short description placeholder.</p>
+                        <a href="projects.html">View project</a>
+                    </article>
+                    <article class="card" data-reveal>
+                        <h3>Project placeholder 3</h3>
+                        <p>Short description placeholder.</p>
+                        <a href="projects.html">View project</a>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" aria-labelledby="cta-title">
+            <div class="container">
+                <h2 class="section-title" id="cta-title" data-reveal>Get in Touch</h2>
+                <p class="section-lead">Contact details and form will be added with the contact page implementation.</p>
+                <a class="btn btn-primary" href="contact.html">Go to Contact Page</a>
+            </div>
+        </section>
     </main>
 
-    <footer>
-        <p>&copy; 2026 NM OnePoint Services</p>
-    </footer>
+    <div data-component="footer">
+        <noscript>
+            <footer class="site-footer">
+                <div class="container">
+                    <p>&copy; 2026 NM OnePoint Services</p>
+                </div>
+            </footer>
+        </noscript>
+    </div>
 
-    <script src="js/main.js"></script>
+    <script src="js/navigation.js" defer></script>
+    <script src="js/animations.js" defer></script>
+    <script src="js/forms.js" defer></script>
+    <script src="js/main.js" defer></script>
 </body>
 </html>
