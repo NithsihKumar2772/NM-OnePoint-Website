@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Contact NM OnePoint Services — email, mobile and WhatsApp plus an enquiry form for business, engineering and online service requirements.">
+    <title>Contact | NM OnePoint Services</title>
+
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Contact NM OnePoint Services">
+    <meta property="og:description" content="Reach NM OnePoint by email, mobile or WhatsApp, or share your requirement through the enquiry form.">
+    <meta property="og:image" content="assets/images/og-image.svg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="NM OnePoint Services — one point for business and technical solutions">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Contact NM OnePoint Services">
+    <meta name="twitter:description" content="Reach NM OnePoint by email, mobile or WhatsApp, or share your requirement through the enquiry form.">
+    <meta name="twitter:image" content="assets/images/og-image.svg">
+    <meta name="theme-color" content="#050f1f">
+
+    <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+    <link rel="apple-touch-icon" href="assets/logos/logo.jpg">
+    <link rel="manifest" href="site.webmanifest">
+
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+
+    <div data-component="header">
+        <noscript>
+            <header class="site-header is-scrolled">
+                <div class="container site-header-inner">
+                    <a class="site-brand" href="index.html">NM OnePoint Services</a>
+                    <nav class="site-nav" aria-label="Primary">
+                        <ul>
+                            <li><a href="index.html">Home</a></li>
+                            <li><a href="about.html">About</a></li>
+                            <li><a href="services.html">Services</a></li>
+                            <li><a href="projects.html">Projects</a></li>
+                            <li><a href="contact.html" aria-current="page">Contact</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </header>
+        </noscript>
+    </div>
+
+    <main id="main-content" class="site-main">
+        <section class="page-hero" aria-labelledby="page-title">
+            <div class="container">
+                <p class="eyebrow eyebrow-light" data-reveal="fade">Contact</p>
+                <h1 id="page-title" data-reveal="up">Start a conversation.</h1>
+                <p class="page-lead" data-reveal="up" data-delay="100">Reach us directly by email, mobile or WhatsApp — or share the details of your requirement through the enquiry form. To book a meeting, mention a preferred time in your enquiry or message us on WhatsApp.</p>
+            </div>
+        </section>
+
+        <section class="section" aria-labelledby="direct-title">
+            <div class="container">
+                <p class="eyebrow" data-reveal="fade">Direct channels</p>
+                <h2 class="section-title" id="direct-title" data-reveal="up">Talk to the team.</h2>
+                <div class="contact-cards">
+                    <a class="contact-card" href="mailto:nmonepointservices@gmail.com" data-reveal="up">
+                        <span>Email</span>
+                        <strong>nmonepointservices@gmail.com</strong>
+                    </a>
+                    <a class="contact-card" href="tel:+919443273957" data-reveal="up" data-delay="100">
+                        <span>Mobile / WhatsApp</span>
+                        <strong>94432 73957</strong>
+                    </a>
+                    <a class="contact-card" href="https://wa.me/919443273957" rel="noopener" data-reveal="up" data-delay="200">
+                        <span>WhatsApp</span>
+                        <strong>Chat with us</strong>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section class="section story" aria-labelledby="enquiry-title">
+            <div class="container contact-grid">
+                <div>
+                    <p class="eyebrow" data-reveal="fade">Enquiry form</p>
+                    <h2 class="section-title" id="enquiry-title" data-reveal="up">Send an enquiry.</h2>
+                    <p class="section-lead" data-reveal="up" data-delay="80">Frontend-only form: entries are validated in your browser and are not sent anywhere. For a direct response, use the channels above.</p>
+                    <form data-contact-form action="#" method="post" style="margin-top: var(--space-xl)">
+                        <div class="form-field">
+                            <label for="contact-name">Name</label>
+                            <input type="text" id="contact-name" name="name" autocomplete="name" required>
+                        </div>
+                        <div class="form-field">
+                            <label for="contact-email">Email</label>
+                            <input type="email" id="contact-email" name="email" autocomplete="email" required>
+                        </div>
+                        <div class="form-field">
+                            <label for="contact-service">Service needed</label>
+                            <select id="contact-service" name="service" required>
+                                <option value="">Select a service&hellip;</option>
+                                <option value="business-tax">Business &amp; Tax Services</option>
+                                <option value="engineering-bim">Engineering &amp; BIM Services</option>
+                                <option value="online-government">Online Government &amp; Digital Services</option>
+                                <option value="it-support">Computer Repair &amp; IT Services</option>
+                                <option value="gis">GIS Services (QGIS &amp; ArcGIS)</option>
+                                <option value="other">Other / general enquiry</option>
+                            </select>
+                        </div>
+                        <div class="form-field">
+                            <label for="contact-message">Requirement details</label>
+                            <textarea id="contact-message" name="message" rows="6" required></textarea>
+                        </div>
+                        <p class="form-status" data-form-status role="status" hidden></p>
+                        <button class="btn btn-dark" type="submit">Send enquiry <span class="btn-arrow" aria-hidden="true">&rarr;</span></button>
+                    </form>
+                </div>
+                <aside class="contact-aside" aria-labelledby="info-title" data-reveal="left">
+                    <h2 class="section-title" id="info-title">Contact information</h2>
+                    <p>Talk to the Client &amp; Operations team — Nithishkumar &amp; Maheswari.</p>
+                    <ul class="card-list">
+                        <li>Email: <a href="mailto:nmonepointservices@gmail.com">nmonepointservices@gmail.com</a></li>
+                        <li>Mobile / WhatsApp: <a href="tel:+919443273957">94432 73957</a></li>
+                        <li>Mobile: <a href="tel:+916383512358">9443273957</a></li>
+                        <li>Mobile: <a href="tel:+919019958110">90199 58110</a></li>
+                        <li><a href="https://wa.me/919443273957" rel="noopener">Chat on WhatsApp</a></li>
+                    </ul>
+                    <p>Meanwhile, see <a href="services.html">what we do</a> or read <a href="index.html#faq-title">frequently asked questions</a>.</p>
+                </aside>
+            </div>
+        </section>
+    </main>
+
+    <div data-component="footer">
+        <noscript>
+            <footer class="site-footer">
+                <div class="container">
+                    <p>&copy; 2026 NM OnePoint Services</p>
+                </div>
+            </footer>
+        </noscript>
+    </div>
+
+    <script src="js/navigation.js" defer></script>
+    <script src="js/animations.js" defer></script>
+    <script src="js/forms.js" defer></script>
+    <script src="js/main.js" defer></script>
+</body>
+</html>

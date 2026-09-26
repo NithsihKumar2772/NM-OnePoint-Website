@@ -1,0 +1,84 @@
+{
+    "note": "Genuine NM OnePoint service catalogue transcribed from the official NM OnePoint services flyer and YouTube banner. Category names and service names match the source material.",
+    "services": [
+        {
+            "id": "business-tax",
+            "icon": "briefcase",
+            "title": "Business & Tax Services",
+            "tagline": "Registrations, returns and applications for everyday compliance.",
+            "items": [
+                "GST Registration",
+                "GST Monthly Return Filing",
+                "GST Annual Return Filing",
+                "Udyam (MSME) Registration",
+                "LUT (Letter of Undertaking) Registration",
+                "Professional Tax Registration (Government of Karnataka)",
+                "PAN Card Application",
+                "TAN Registration",
+                "IEC Registration",
+                "Digital Signature (DSC)"
+            ]
+        },
+        {
+            "id": "engineering-bim",
+            "icon": "cube",
+            "title": "Engineering & BIM Services",
+            "tagline": "Drafting, modeling and coordination support for building projects.",
+            "items": [
+                "AutoCAD 2D Drafting & Design",
+                "Scan to BIM Services",
+                "Point Cloud to BIM",
+                "BIM Modeling (LOD 100 - 500)",
+                "Revit Architecture Modeling",
+                "Revit Structure Modeling",
+                "Revit MEP Modeling",
+                "As-Built BIM Modeling",
+                "Clash Detection",
+                "Quantity Take-Off (BOQ)",
+                "Shop Drawings"
+            ]
+        },
+        {
+            "id": "online-government",
+            "icon": "filetext",
+            "title": "Online Government & Digital Services",
+            "tagline": "Help with online applications and everyday e-services.",
+            "items": [
+                "Government Job Online Applications",
+                "PAN Card Application",
+                "Passport Application Assistance",
+                "PF (Provident Fund) Withdrawal / Application Assistance",
+                "Online Bank Account Opening Assistance",
+                "All Online e-Sevai Services"
+            ]
+        },
+        {
+            "id": "it-support",
+            "icon": "cpu",
+            "title": "Computer System Repair & IT Services",
+            "tagline": "Repair, setup and maintenance for computers and office IT.",
+            "items": [
+                "Computer System Repair & Troubleshooting",
+                "OS Update & Optimization (Windows)",
+                "Software Installation (All Types)",
+                "Virus Removal & System Cleanup",
+                "Data Backup & Recovery Assistance",
+                "Hardware Diagnostics & Performance Tuning"
+            ]
+        },
+        {
+            "id": "gis",
+            "icon": "globe",
+            "title": "GIS Services (QGIS & ArcGIS)",
+            "tagline": "Mapping and spatial data work with QGIS and ArcGIS.",
+            "items": [
+                "QGIS Mapping & Spatial Analysis",
+                "ArcGIS Data Management & Analysis",
+                "Land Use / Land Cover Mapping",
+                "Geospatial Data Creation & Editing",
+                "Vector & Raster Data Processing",
+                "Custom GIS Project Support"
+            ]
+        }
+    ]
+}

@@ -1,0 +1,35 @@
+{
+    "note": "Homepage FAQ entries. Answers use only information published in the official NM OnePoint services material. No guarantees or unsupported claims.",
+    "faqs": [
+        {
+            "id": "services-offered",
+            "question": "What services does NM OnePoint provide?",
+            "answer": "NM OnePoint covers five categories: Business & Tax Services, Engineering & BIM Services, Online Government & Digital Services, Computer System Repair & IT Services, and GIS Services with QGIS and ArcGIS."
+        },
+        {
+            "id": "business-tax",
+            "question": "Which business and tax services are offered?",
+            "answer": "GST registration and monthly and annual return filing, Udyam (MSME) registration, LUT registration, Professional Tax registration (Government of Karnataka), PAN and TAN applications, IEC registration, and Digital Signature (DSC)."
+        },
+        {
+            "id": "bim",
+            "question": "Which BIM and engineering services are offered?",
+            "answer": "AutoCAD 2D drafting and design, Scan to BIM, Point Cloud to BIM, BIM modeling (LOD 100-500), Revit architecture, structure and MEP modeling, as-built BIM modeling, clash detection, quantity take-off (BOQ), and shop drawings."
+        },
+        {
+            "id": "gis",
+            "question": "Which GIS services are offered?",
+            "answer": "QGIS mapping and spatial analysis, ArcGIS data management and analysis, land use and land cover mapping, geospatial data creation and editing, vector and raster data processing, and custom GIS project support."
+        },
+        {
+            "id": "multiple-services",
+            "question": "Can I request multiple services together?",
+            "answer": "Yes. Business, engineering and online service needs can be discussed together, so related requirements stay coordinated through one point of contact."
+        },
+        {
+            "id": "contact",
+            "question": "How can I contact NM OnePoint?",
+            "answer": "Email nmonepointservices@gmail.com, call or WhatsApp 94432 73957 (also reachable on 63835 12358 and 90199 58110), or use the Contact page enquiry form."
+        }
+    ]
+}

@@ -1,0 +1,29 @@
+{
+    "companyName": "NM OnePoint Services",
+    "tagline": "One Point. Multiple Solutions.",
+    "positioning": "One-Stop Solution for Business, Engineering & Online Services",
+    "contact": {
+        "email": "nmonepointservices@gmail.com",
+        "phoneDisplay": "94432 73957",
+        "phoneHref": "tel:+919443273957",
+        "phoneSecondaryDisplay": "63835 12358",
+        "phoneSecondaryHref": "tel:+916383512358",
+        "phoneExtraDisplay": "90199 58110",
+        "phoneExtraHref": "tel:+919019958110",
+        "whatsappDisplay": "Chat on WhatsApp",
+        "whatsappHref": "https://wa.me/919443273957",
+        "team": "Nithishkumar & Maheswari"
+    },
+    "note": "Primary mobile/WhatsApp 9443273957 is the current verified number. The numbers 6383512358 (both flyer versions) and 9019958110 (one flyer version) are retained as genuine secondary contacts. No street address is published in the source material, so none is listed. Country code +91 follows from the Indian mobile format and the Karnataka Professional Tax reference.",
+    "social": {
+        "linkedin": "[placeholder]",
+        "x": "[placeholder]",
+        "facebook": "[placeholder]"
+    },
+    "stats": [
+        { "value": "05", "label": "Service categories" },
+        { "value": "39", "label": "Listed services" },
+        { "value": "04", "label": "Defined workflow steps" },
+        { "value": "01", "label": "Single point of contact" }
+    ]
+}
