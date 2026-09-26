@@ -4,6 +4,11 @@ body {
     line-height: var(--line-height-base);
     background: var(--color-background);
     color: var(--color-text);
+    overflow-x: clip;
+}
+
+body.menu-open {
+    overflow: hidden;
 }
 
 main {
@@ -14,13 +19,19 @@ h1,
 h2,
 h3 {
     line-height: var(--line-height-heading);
+    letter-spacing: var(--letter-tight);
     margin-bottom: var(--space-md);
-    letter-spacing: -0.01em;
+    text-wrap: balance;
 }
 
 p {
     margin-bottom: var(--space-md);
     max-width: 65ch;
+}
+
+::selection {
+    background: var(--color-accent);
+    color: #ffffff;
 }
 
 .container {
@@ -34,21 +45,77 @@ p {
 
 .site-main {
     padding-top: 0;
-    padding-bottom: var(--space-xxl);
+    padding-bottom: 0;
 }
 
-.eyebrow {
-    font-size: var(--font-size-sm);
-    font-weight: var(--font-weight-semibold);
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--color-accent-ink);
+/* Section shells — light / dark rhythm */
+
+.section {
+    padding-top: var(--space-mega);
+    padding-bottom: var(--space-mega);
+}
+
+.section-dark {
+    background: var(--color-abyss);
+    color: var(--color-dark-text);
+}
+
+.section-dark .section-title {
+    color: #ffffff;
+}
+
+.section-dark .section-lead {
+    color: var(--color-dark-muted);
+}
+
+.section-title {
+    font-size: var(--font-size-section);
+    font-weight: var(--font-weight-black);
     margin-bottom: var(--space-sm);
 }
 
+.section-lead {
+    color: var(--color-muted);
+    font-size: var(--font-size-lg);
+    margin-bottom: 0;
+}
+
 .section-head {
-    max-width: 720px;
-    margin-bottom: var(--space-lg);
+    max-width: 780px;
+    margin-bottom: var(--space-xxl);
+}
+
+.section-head.split {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: end;
+    justify-content: space-between;
+    gap: var(--space-md);
+    max-width: none;
+}
+
+.eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    font-size: 0.78rem;
+    font-weight: var(--font-weight-bold);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--color-accent-ink);
+    margin-bottom: var(--space-md);
+}
+
+.eyebrow::before {
+    content: "";
+    width: 2rem;
+    height: 2px;
+    background: currentColor;
+    flex: none;
+}
+
+.eyebrow-light {
+    color: var(--color-mint);
 }
 
 .skip-link {
@@ -66,6 +133,12 @@ p {
 
 .skip-link:focus {
     top: var(--space-sm);
+}
+
+/* Anchored headings clear the fixed header */
+
+[id] {
+    scroll-margin-top: calc(var(--header-height) + 1rem);
 }
 
 :focus-visible {

@@ -3,14 +3,12 @@
 window.NMOnePoint = window.NMOnePoint || {};
 
 window.NMOnePoint.initAnimations = function initAnimations() {
-    if (
+    const reducedMotion =
         typeof window.matchMedia === "function" &&
-        window.matchMedia("(prefers-reduced-motion: reduce)").matches
-    ) {
-        return;
-    }
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    if (!("IntersectionObserver" in window)) {
+    /* Reduced motion: leave content fully visible, skip all animation. */
+    if (reducedMotion || !("IntersectionObserver" in window)) {
         return;
     }
 
@@ -22,12 +20,19 @@ window.NMOnePoint.initAnimations = function initAnimations() {
             (entries) => {
                 entries.forEach((entry) => {
                     if (entry.isIntersecting) {
+                        const delay = parseInt(
+                            entry.target.getAttribute("data-delay") || "0",
+                            10
+                        );
+                        if (!isNaN(delay) && delay > 0) {
+                            entry.target.style.transitionDelay = delay + "ms";
+                        }
                         entry.target.setAttribute("data-revealed", "true");
                         revealObserver.unobserve(entry.target);
                     }
                 });
             },
-            { threshold: 0.15 }
+            { threshold: 0.15, rootMargin: "0px 0px -8% 0px" }
         );
 
         revealItems.forEach((item) => revealObserver.observe(item));
@@ -43,11 +48,12 @@ window.NMOnePoint.initAnimations = function initAnimations() {
         if (isNaN(target)) {
             return;
         }
-        const duration = 900;
+        const duration = 1100;
         const start = performance.now();
         const step = (now) => {
             const progress = Math.min((now - start) / duration, 1);
-            const padded = String(Math.round(target * progress)).padStart(2, "0");
+            const eased = 1 - Math.pow(1 - progress, 3);
+            const padded = String(Math.round(target * eased)).padStart(2, "0");
             element.textContent = padded;
             if (progress < 1) {
                 requestAnimationFrame(step);

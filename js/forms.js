@@ -31,7 +31,7 @@ window.NMOnePoint.initForms = function initForms() {
                 return;
             }
             showStatus(
-                "Thank you. This demonstration form does not send messages anywhere yet — contact details will be published here once verified."
+                "Thank you. This form does not send messages anywhere yet — please reach NM OnePoint directly at nmonepointservices@gmail.com or on 94432 73957."
             );
             form.reset();
         });

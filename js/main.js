@@ -38,7 +38,9 @@ window.NMOnePoint.serviceIcons = {
     cube:
         '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 2l8 4.5v9L12 20l-8-4.5v-9L12 2z"/><path d="M12 11L4 6.5M12 11l8-4.5M12 11v9"/></svg>',
     globe:
-        '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.5 3 14 0 18M12 3c-3 3.5-3 14 0 18"/></svg>'
+        '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.5 3 14 0 18M12 3c-3 3.5-3 14 0 18"/></svg>',
+    filetext:
+        '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M6 2h9l5 5v15H6z"/><path d="M14 2v6h6M9 13l2 2 4-4"/></svg>'
 };
 
 window.NMOnePoint.renderServices = async function renderServices() {
@@ -61,23 +63,51 @@ window.NMOnePoint.renderServices = async function renderServices() {
         }
         const ctaHref = grid.getAttribute("data-services-href") || "services.html";
         const ctaLabel = grid.getAttribute("data-services-cta") || "Learn more";
+        const fullList = grid.getAttribute("data-services-full") === "true";
+        const sizeById = {
+            "engineering-bim": "bento-lg",
+            "business-tax": "bento-md",
+            "gis": "bento-wide",
+            "online-government": "bento-half",
+            "it-support": "bento-half",
+        };
+        const maxItems = 5;
         grid.innerHTML = services
-            .map(
-                (service) =>
-                    '<article class="card service-card" data-reveal>' +
-                    '<span class="service-icon" aria-hidden="true">' +
+            .map((service, index) => {
+                const items = Array.isArray(service.items) ? service.items : [];
+                const shown = fullList ? items : items.slice(0, maxItems);
+                const hidden = items.length - shown.length;
+                return (
+                    '<article class="bento-card ' +
+                    (sizeById[service.id] || "bento-half") +
+                    '" data-reveal="up" data-delay="' +
+                    (index % 3) * 100 +
+                    '">' +
+                    '<div class="bento-top">' +
+                    '<span class="bento-num" aria-hidden="true">' +
+                    String(index + 1).padStart(2, "0") +
+                    "</span>" +
+                    '<span class="bento-icon" aria-hidden="true">' +
                     (window.NMOnePoint.serviceIcons[service.icon] || "") +
                     "</span>" +
+                    "</div>" +
                     "<h3>" + escapeHtml(service.title || "Service") + "</h3>" +
-                    "<p>" + escapeHtml(service.tagline || "") + "</p>" +
-                    "<ul class=\"card-list\">" +
-                    (Array.isArray(service.items) ? service.items : [])
+                    "<p class=\"bento-tag\">" + escapeHtml(service.tagline || "") + "</p>" +
+                    '<ul class="bento-list">' +
+                    shown
                         .map((item) => "<li>" + escapeHtml(item) + "</li>")
                         .join("") +
                     "</ul>" +
-                    '<a href="' + escapeHtml(ctaHref) + '">' + escapeHtml(ctaLabel) + "</a>" +
+                    (hidden > 0
+                        ? '<p class="bento-more">+' + hidden + " more services</p>"
+                        : "") +
+                    '<a class="bento-link" href="' + escapeHtml(ctaHref) + '">' +
+                    escapeHtml(ctaLabel) +
+                    '<span class="bento-arrow" aria-hidden="true">&rarr;</span>' +
+                    "</a>" +
                     "</article>"
-            )
+                );
+            })
             .join("");
     } catch (error) {
         console.warn("Services failed to load:", error);
@@ -243,6 +273,272 @@ window.NMOnePoint.initProjectFilters = async function initProjectFilters() {
     });
 };
 
+window.NMOnePoint.slugify = function slugify(name) {
+    return String(name)
+        .toLowerCase()
+        .replace(/&/g, "")
+        .replace(/[()/]/g, " ")
+        .normalize("NFKD")
+        .replace(/[^a-z0-9\s-]/g, "")
+        .trim()
+        .replace(/[\s_]+/g, "-")
+        .replace(/-+/g, "-")
+        .replace(/^-|-$/g, "");
+};
+
+window.NMOnePoint.buildServiceIndex = async function buildServiceIndex() {
+    if (window.NMOnePoint._serviceIndex) {
+        return window.NMOnePoint._serviceIndex;
+    }
+    const response = await fetch("data/services.json", { cache: "no-cache" });
+    if (!response.ok) {
+        throw new Error("HTTP " + response.status);
+    }
+    const data = await response.json();
+    const categories = data && Array.isArray(data.services) ? data.services : [];
+    const used = {};
+    const index = [];
+    categories.forEach((category) => {
+        const items = Array.isArray(category.items) ? category.items : [];
+        items.forEach((name) => {
+            let slug = window.NMOnePoint.slugify(name);
+            if (used[slug]) {
+                slug = category.id + "-" + slug;
+            }
+            used[slug] = true;
+            index.push({
+                name: name,
+                categoryId: category.id,
+                categoryTitle: category.title,
+                tagline: category.tagline,
+                icon: category.icon,
+                slug: slug,
+            });
+        });
+    });
+    window.NMOnePoint._serviceIndex = { categories: categories, index: index };
+    return window.NMOnePoint._serviceIndex;
+};
+
+window.NMOnePoint.detailUrl = function detailUrl(slug) {
+    return "service.html?service=" + encodeURIComponent(slug);
+};
+
+window.NMOnePoint.renderMegaMenu = async function renderMegaMenu() {
+    const menu = document.querySelector("[data-mega-menu]");
+    if (!menu) {
+        return;
+    }
+
+    const escapeHtml = window.NMOnePoint.escapeHtml;
+
+    try {
+        const built = await window.NMOnePoint.buildServiceIndex();
+        if (!built.categories.length) {
+            throw new Error("empty catalogue");
+        }
+        const byCategory = {};
+        built.index.forEach((service) => {
+            if (!byCategory[service.categoryId]) {
+                byCategory[service.categoryId] = [];
+            }
+            byCategory[service.categoryId].push(service);
+        });
+        menu.innerHTML =
+            '<div class="mega-panel">' +
+            built.categories
+                .map(
+                    (category) =>
+                        '<div class="drop-cat" data-cat="' + escapeHtml(category.id) + '">' +
+                        '<div class="drop-cat-row">' +
+                        '<a class="drop-cat-link" href="services.html#cat-' + escapeHtml(category.id) + '">' +
+                        escapeHtml(category.title) +
+                        '<svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 4l4 4-4 4"/></svg>' +
+                        "</a>" +
+                        '<button class="drop-sub-toggle" type="button" aria-expanded="false" aria-controls="drop-items-' + escapeHtml(category.id) + '" aria-label="Show ' + escapeHtml(category.title) + ' services" data-mega-cat-toggle>' +
+                        '<svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 6l4 4 4-4"/></svg>' +
+                        "</button>" +
+                        "</div>" +
+                        '<ul class="drop-sub" id="drop-items-' + escapeHtml(category.id) + '">' +
+                        (byCategory[category.id] || [])
+                            .map(
+                                (service) =>
+                                    '<li><a href="' + escapeHtml(window.NMOnePoint.detailUrl(service.slug)) + '">' +
+                                    escapeHtml(service.name) +
+                                    "</a></li>"
+                            )
+                            .join("") +
+                        "</ul>" +
+                        "</div>"
+                )
+                .join("") +
+            '<a class="drop-all" href="services.html">View all ' +
+            built.index.length +
+            ' services <span aria-hidden="true">&rarr;</span></a>' +
+            "</div>";
+    } catch (error) {
+        console.warn("Mega menu failed to load:", error);
+        const toggle = document.querySelector("[data-mega-toggle]");
+        if (toggle) {
+            toggle.hidden = true;
+        }
+    }
+};
+
+window.NMOnePoint.renderServiceDirectory = async function renderServiceDirectory() {
+    const mount = document.querySelector("[data-service-directory]");
+    if (!mount) {
+        return;
+    }
+
+    const escapeHtml = window.NMOnePoint.escapeHtml;
+
+    try {
+        const built = await window.NMOnePoint.buildServiceIndex();
+        if (!built.categories.length) {
+            return;
+        }
+        const byCategory = {};
+        built.index.forEach((service) => {
+            if (!byCategory[service.categoryId]) {
+                byCategory[service.categoryId] = [];
+            }
+            byCategory[service.categoryId].push(service);
+        });
+        mount.innerHTML = built.categories
+            .map(
+                (category, index) =>
+                    '<section class="dir-cat" id="cat-' + escapeHtml(category.id) + '" aria-labelledby="dir-title-' + escapeHtml(category.id) + '" data-dir-cat>' +
+                    '<div class="dir-cat-head">' +
+                    '<span class="bento-num" aria-hidden="true">' + String(index + 1).padStart(2, "0") + "</span>" +
+                    '<span class="bento-icon" aria-hidden="true">' + (window.NMOnePoint.serviceIcons[category.icon] || "") + "</span>" +
+                    "<div><h3 id=\"dir-title-" + escapeHtml(category.id) + "\">" + escapeHtml(category.title) + "</h3>" +
+                    "<p>" + escapeHtml(category.tagline || "") + "</p></div>" +
+                    "</div>" +
+                    '<ul class="dir-list">' +
+                    (byCategory[category.id] || [])
+                        .map(
+                            (service) =>
+                                '<li data-dir-item><a href="' + escapeHtml(window.NMOnePoint.detailUrl(service.slug)) + '">' +
+                                escapeHtml(service.name) +
+                                '<span aria-hidden="true">&rarr;</span></a></li>'
+                        )
+                        .join("") +
+                    "</ul>" +
+                    "</section>"
+            )
+            .join("");
+
+        const search = document.querySelector("[data-service-search]");
+        const emptyNote = document.querySelector("[data-directory-empty]");
+        if (search) {
+            search.addEventListener("input", () => {
+                const query = search.value.trim().toLowerCase();
+                let visible = 0;
+                mount.querySelectorAll("[data-dir-cat]").forEach((section) => {
+                    let sectionVisible = 0;
+                    section.querySelectorAll("[data-dir-item]").forEach((item) => {
+                        const match =
+                            !query ||
+                            item.textContent.toLowerCase().indexOf(query) !== -1;
+                        item.hidden = !match;
+                        if (match) {
+                            sectionVisible += 1;
+                        }
+                    });
+                    section.hidden = sectionVisible === 0;
+                    visible += sectionVisible;
+                });
+                if (emptyNote) {
+                    emptyNote.hidden = visible !== 0;
+                }
+            });
+        }
+    } catch (error) {
+        console.warn("Service directory failed to load:", error);
+    }
+};
+
+window.NMOnePoint.renderServiceDetail = async function renderServiceDetail() {
+    const mount = document.querySelector("[data-service-detail]");
+    if (!mount) {
+        return;
+    }
+
+    const escapeHtml = window.NMOnePoint.escapeHtml;
+    const params = new URLSearchParams(window.location.search || "");
+    const slug = params.get("service") || "";
+
+    try {
+        const built = await window.NMOnePoint.buildServiceIndex();
+        const service = built.index.filter((item) => item.slug === slug)[0];
+
+        if (!service) {
+            mount.innerHTML =
+                '<p class="eyebrow">Service detail</p>' +
+                "<h1>Service not found</h1>" +
+                '<p class="section-lead">The requested service could not be matched. Browse the <a href="services.html">full service directory</a> or <a href="contact.html">contact NM OnePoint</a>.</p>';
+            return;
+        }
+
+        const siblings = built.index.filter(
+            (item) => item.categoryId === service.categoryId && item.slug !== service.slug
+        );
+        const position =
+            built.index
+                .filter((item) => item.categoryId === service.categoryId)
+                .map((item) => item.slug)
+                .indexOf(service.slug) + 1;
+        const categoryCount = built.index.filter(
+            (item) => item.categoryId === service.categoryId
+        ).length;
+
+        document.title = service.name + " | NM OnePoint Services";
+        const metaDescription = document.querySelector('meta[name="description"]');
+        if (metaDescription) {
+            metaDescription.setAttribute(
+                "content",
+                service.name + " — " + service.categoryTitle + " at NM OnePoint Services. One Point. Multiple Solutions."
+            );
+        }
+
+        mount.innerHTML =
+            '<nav class="detail-crumb" aria-label="Breadcrumb"><a href="index.html">Home</a> <span aria-hidden="true">/</span> <a href="services.html">Services</a> <span aria-hidden="true">/</span> <a href="services.html#cat-' + escapeHtml(service.categoryId) + '">' + escapeHtml(service.categoryTitle) + "</a></nav>" +
+            '<p class="eyebrow">' + escapeHtml(service.categoryTitle) + "</p>" +
+            "<h1>" + escapeHtml(service.name) + "</h1>" +
+            '<p class="section-lead">' + escapeHtml(service.tagline || "") + "</p>" +
+            "<h2>Service overview</h2>" +
+            "<p>" + escapeHtml(service.name) + " is service " + position + " of " + categoryCount + " in " + escapeHtml(service.categoryTitle) + " at NM OnePoint Services. Scope, deliverables and timelines are agreed with the Client &amp; Operations team before work begins.</p>" +
+            "<h2>How to proceed</h2>" +
+            "<ol class=\"detail-steps\">" +
+            "<li><strong>Share the requirement.</strong> Describe what you need — business, engineering, online, or a mix.</li>" +
+            "<li><strong>Agree the scope.</strong> Deliverables and timelines are confirmed before work begins.</li>" +
+            "<li><strong>Delivery &amp; follow-up.</strong> Agreed outputs are handed over with support for follow-up questions.</li>" +
+            "</ol>" +
+            '<div class="cta-actions">' +
+            '<a class="btn btn-primary" href="contact.html">Discuss this service <span class="btn-arrow" aria-hidden="true">&rarr;</span></a>' +
+            '<a class="btn btn-dark" href="https://wa.me/919443273957?text=' + encodeURIComponent("Hello NM OnePoint, I would like to discuss: " + service.name) + '" rel="noopener">WhatsApp</a>' +
+            "</div>" +
+            (siblings.length
+                ? '<div class="detail-siblings"><h2>More in ' + escapeHtml(service.categoryTitle) + "</h2><ul>" +
+                  siblings
+                      .map(
+                          (sibling) =>
+                              '<li><a href="' + escapeHtml(window.NMOnePoint.detailUrl(sibling.slug)) + '">' +
+                              escapeHtml(sibling.name) +
+                              "</a></li>"
+                      )
+                      .join("") +
+                  "</ul></div>"
+                : "");
+    } catch (error) {
+        console.warn("Service detail failed to load:", error);
+        mount.innerHTML =
+            "<h1>Service detail</h1>" +
+            '<p class="section-lead">Service information could not be loaded. See the <a href="services.html">service directory</a>.</p>';
+    }
+};
+
 window.NMOnePoint.init = async function init() {
     await window.NMOnePoint.loadComponent(
         '[data-component="header"]',
@@ -252,6 +548,17 @@ window.NMOnePoint.init = async function init() {
         '[data-component="footer"]',
         "components/footer.html"
     );
+
+    if (
+        window.NMOnePoint.renderMegaMenu &&
+        typeof window.NMOnePoint.renderMegaMenu === "function"
+    ) {
+        try {
+            await window.NMOnePoint.renderMegaMenu();
+        } catch (error) {
+            console.warn("Mega menu render failed:", error);
+        }
+    }
 
     if (
         window.NMOnePoint.initNavigation &&
@@ -272,6 +579,28 @@ window.NMOnePoint.init = async function init() {
             await window.NMOnePoint.renderServices();
         } catch (error) {
             console.warn("Services render failed:", error);
+        }
+    }
+
+    if (
+        window.NMOnePoint.renderServiceDirectory &&
+        typeof window.NMOnePoint.renderServiceDirectory === "function"
+    ) {
+        try {
+            await window.NMOnePoint.renderServiceDirectory();
+        } catch (error) {
+            console.warn("Service directory render failed:", error);
+        }
+    }
+
+    if (
+        window.NMOnePoint.renderServiceDetail &&
+        typeof window.NMOnePoint.renderServiceDetail === "function"
+    ) {
+        try {
+            await window.NMOnePoint.renderServiceDetail();
+        } catch (error) {
+            console.warn("Service detail render failed:", error);
         }
     }
 

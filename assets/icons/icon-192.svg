@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192" width="192" height="192" role="img" aria-label="NM OnePoint Services app icon">
+  <title>NM OnePoint — NP app icon</title>
+  <rect x="0" y="0" width="192" height="192" rx="42" fill="#0e2a47"/>
+  <g stroke="#ffffff" stroke-opacity="0.07" stroke-width="2">
+    <path d="M0 64h192M0 128h192M64 0v192M128 0v192"/>
+  </g>
+  <circle cx="140" cy="52" r="12" fill="#2dd4bf"/>
+  <text x="96" y="122" font-family="Arial, Helvetica, sans-serif" font-size="74" font-weight="bold" letter-spacing="1" fill="#f4f6f9" text-anchor="middle">NP</text>
+  <rect x="54" y="138" width="84" height="12" rx="6" fill="#14b8a6"/>
+</svg>
