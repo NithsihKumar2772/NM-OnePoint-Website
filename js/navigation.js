@@ -13,22 +13,13 @@ window.NMOnePoint.initMegaMenu = function initMegaMenu() {
         return;
     }
 
-    const isMobile = () =>
-        typeof window.matchMedia === "function" &&
-        window.matchMedia("(max-width: 860px)").matches;
-
     const setMega = (open) => {
         item.classList.toggle("mega-open", open);
         toggle.setAttribute("aria-expanded", String(open));
-        menu.querySelectorAll("[data-mega-cat-toggle]").forEach((catToggle) => {
-            if (!open && isMobile()) {
-                catToggle.setAttribute("aria-expanded", "false");
-                const col = catToggle.closest(".drop-cat");
-                if (col) {
-                    col.classList.remove("open");
-                }
-            }
-        });
+        const megaLink = item.querySelector("[data-mega-link]");
+        if (megaLink) {
+            megaLink.setAttribute("aria-expanded", String(open));
+        }
     };
 
     toggle.addEventListener("click", (event) => {
@@ -37,16 +28,6 @@ window.NMOnePoint.initMegaMenu = function initMegaMenu() {
     });
 
     menu.addEventListener("click", (event) => {
-        const catToggle = event.target.closest("[data-mega-cat-toggle]");
-        if (catToggle) {
-            const col = catToggle.closest(".drop-cat");
-            const open = catToggle.getAttribute("aria-expanded") === "true";
-            catToggle.setAttribute("aria-expanded", String(!open));
-            if (col) {
-                col.classList.toggle("open", !open);
-            }
-            return;
-        }
         if (event.target.closest("a[href]")) {
             setMega(false);
         }

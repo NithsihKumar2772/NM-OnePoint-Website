@@ -8,10 +8,6 @@
         align-items: center;
     }
 
-    .header-cta {
-        display: none;
-    }
-
     .site-nav ul[data-nav-menu][hidden] {
         display: none;
     }
@@ -124,16 +120,6 @@
         padding: 0;
     }
 
-    .drop-cat {
-        position: static;
-        border-bottom: 1px solid var(--color-line-dark);
-    }
-
-    .drop-cat-row {
-        display: flex;
-        align-items: center;
-    }
-
     .drop-cat-link {
         flex: 1;
         padding: var(--space-md) var(--space-xs);
@@ -142,100 +128,6 @@
         white-space: normal;
     }
 
-    .drop-cat-link svg {
-        display: none;
-    }
-
-    .drop-cat:hover > .drop-cat-link,
-    .drop-cat:focus-within > .drop-cat-link {
-        background: transparent;
-        color: var(--color-mint) !important;
-    }
-
-    .drop-sub-toggle {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        width: 44px;
-        height: 44px;
-        flex: none;
-        border: 1px solid var(--color-line-dark);
-        border-radius: var(--radius-sm);
-        background: transparent;
-        color: var(--color-mint);
-        cursor: pointer;
-        transition: transform 200ms ease;
-    }
-
-    .drop-sub-toggle[aria-expanded="true"] {
-        transform: rotate(180deg);
-    }
-
-    .drop-sub {
-        position: static;
-        min-width: 0;
-        max-width: none;
-        max-height: none;
-        overflow: visible;
-        visibility: visible;
-        opacity: 1;
-        transform: none;
-        pointer-events: auto;
-        background: transparent;
-        border: none;
-        border-radius: 0;
-        box-shadow: none;
-        transition: none;
-        display: none;
-        padding: 0 0 var(--space-md) var(--space-md);
-    }
-
-    .drop-cat.open .drop-sub {
-        display: block;
-    }
-
-    .drop-cat:hover > .drop-sub,
-    .drop-cat:focus-within > .drop-sub {
-        visibility: visible;
-        opacity: 1;
-        transform: none;
-        pointer-events: auto;
-    }
-
-    .drop-sub a {
-        padding: 0.7rem 0;
-        font-size: 0.95rem;
-        min-height: 44px;
-        display: flex;
-        align-items: center;
-        color: var(--color-dark-muted) !important;
-    }
-
-    .drop-sub a:hover {
-        background: transparent;
-        color: #ffffff !important;
-    }
-
-    .drop-all {
-        border-top: none;
-        padding: var(--space-md) 0;
-        color: var(--color-mint) !important;
-    }
-
-    .drop-all:hover {
-        background: transparent;
-    }
-
-    @keyframes menu-in {
-        from {
-            opacity: 0;
-            transform: translateY(-12px);
-        }
-        to {
-            opacity: 1;
-            transform: none;
-        }
-    }
 }
 
 /* ---------- Small phones ---------- */
@@ -428,9 +320,9 @@
         margin-left: 0;
     }
 
-    .header-cta {
-        padding: 0.5rem 0.9rem;
+    .nav-book a {
         font-size: 0.82rem;
+        padding: 0.5rem 0.9rem;
     }
 }
 
@@ -446,6 +338,26 @@
         clip-path: inset(50%);
         border: 0;
         white-space: nowrap;
+    }
+}
+
+/* ---------- Desktop nav baseline: one aligned row, no wrapping (861px and up) ---------- */
+
+@media (min-width: 861px) {
+    .site-nav > ul > li:not(.nav-book) {
+        display: flex;
+        align-items: center;
+    }
+
+    .site-nav > ul > li > a {
+        display: inline-flex;
+        align-items: center;
+        min-height: 44px;
+        white-space: nowrap;
+    }
+
+    .nav-item-has-mega .mega-toggle {
+        display: none;
     }
 }
 
