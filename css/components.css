@@ -126,6 +126,7 @@
     background: #ffffff;
     object-fit: cover;
     transition: transform var(--transition-base);
+    animation: brand-mark-in 750ms var(--ease-out) backwards;
 }
 
 .site-brand:hover .site-brand-logo {
@@ -135,6 +136,32 @@
 .site-brand-text {
     font-weight: var(--font-weight-bold);
     letter-spacing: -0.01em;
+    animation: brand-text-in 750ms var(--ease-out) backwards;
+}
+
+/* One-time brand entrance: mark settles while the wordmark glides in.
+   Transform/opacity only — no layout shift, runs once, then stable. */
+
+@keyframes brand-mark-in {
+    from {
+        opacity: 0;
+        transform: scale(0.92);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes brand-text-in {
+    from {
+        opacity: 0;
+        transform: translateX(10px);
+    }
+    to {
+        opacity: 1;
+        transform: none;
+    }
 }
 
 .site-nav ul {
@@ -1472,7 +1499,8 @@ form select:focus {
     position: absolute;
     top: 100%;
     left: 0;
-    min-width: 264px;
+    min-width: 400px;
+    max-width: calc(100vw - 2rem);
     padding-top: 12px;
     background: transparent;
     visibility: hidden;
@@ -1548,16 +1576,41 @@ form select:focus {
 }
 
 .drop-sub-toggle {
-    display: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    flex: none;
+    border: none;
+    border-radius: var(--radius-sm);
+    background: transparent;
+    color: var(--color-muted);
+    cursor: pointer;
+    transition: background var(--transition-fast), color var(--transition-fast),
+        transform 200ms ease;
 }
+
+.drop-sub-toggle:hover {
+    background: var(--color-surface);
+    color: var(--color-accent-ink);
+}
+
+.drop-sub-toggle[aria-expanded="true"] {
+    transform: rotate(90deg);
+    color: var(--color-accent-ink);
+}
+
+/* Compact second-level flyout: one category at a time, single column.
+   Mobile accordion overrides this further below. */
 
 .drop-sub {
     position: absolute;
-    top: -4px;
+    top: -6px;
     left: calc(100% + 10px);
     min-width: 270px;
-    max-width: 320px;
-    max-height: 70vh;
+    max-width: 300px;
+    max-height: 60vh;
     overflow-y: auto;
     list-style: none;
     margin: 0;
@@ -1574,14 +1627,39 @@ form select:focus {
     z-index: var(--z-nav);
 }
 
-.drop-cat:hover > .drop-sub,
-.drop-cat:focus-within > .drop-sub {
+.drop-cat:hover .drop-sub,
+.drop-cat:focus-within .drop-sub,
+.drop-cat.open .drop-sub {
     visibility: visible;
     opacity: 1;
     transform: none;
     transition: opacity 180ms ease, transform 180ms ease;
     pointer-events: auto;
 }
+
+/* Viewport guard: flip the flyout left when near the right edge. */
+
+.flip-flyouts .drop-sub {
+    left: auto;
+    right: calc(100% + 10px);
+    transform: translateX(6px);
+}
+
+.flip-flyouts .drop-cat:hover .drop-sub,
+.flip-flyouts .drop-cat:focus-within .drop-sub,
+.flip-flyouts .drop-cat.open .drop-sub {
+    transform: none;
+}
+
+
+
+
+
+
+
+
+
+
 
 .drop-sub a {
     display: block;
@@ -1643,8 +1721,28 @@ form select:focus {
     color: #ffffff !important;
 }
 
-.nav-book {
+.nav-book a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0.55rem 1.1rem;
+    border: 1px solid var(--color-accent);
+    border-radius: var(--radius-pill);
+    background: var(--color-accent);
+    color: #ffffff !important;
+    font-size: 0.88rem;
+    white-space: nowrap;
+    transition: background var(--transition-base), border-color var(--transition-base);
+}
+
+.nav-book a::after {
     display: none;
+}
+
+.nav-book a:hover {
+    background: var(--color-accent-ink);
+    border-color: var(--color-accent-ink);
+    color: #ffffff !important;
 }
 
 /* ---------- Service directory ---------- */
@@ -1846,7 +1944,9 @@ form select:focus {
     .tech-drift,
     .tech-drift-slow,
     .ticker-track,
-    .mega-menu {
+    .mega-menu,
+    .site-brand-logo,
+    .site-brand-text {
         animation: none;
     }
 

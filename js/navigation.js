@@ -17,18 +17,71 @@ window.NMOnePoint.initMegaMenu = function initMegaMenu() {
         typeof window.matchMedia === "function" &&
         window.matchMedia("(max-width: 860px)").matches;
 
+    const canHover =
+        typeof window.matchMedia === "function" &&
+        window.matchMedia("(hover: hover)").matches;
+
+    const closeRows = () => {
+        menu.querySelectorAll(".drop-cat.open").forEach((col) => {
+            col.classList.remove("open");
+        });
+        menu.querySelectorAll("[data-mega-cat-toggle]").forEach((catToggle) => {
+            catToggle.setAttribute("aria-expanded", "false");
+        });
+        menu.classList.remove("flip-flyouts");
+    };
+
+    /* Keep a compact second panel inside the viewport: flip flyouts to the
+       left when the Services item sits too close to the right edge. */
+    const positionFlyouts = () => {
+        if (isMobile()) {
+            menu.classList.remove("flip-flyouts");
+            return;
+        }
+        const link = item.querySelector("[data-mega-link]");
+        if (!link || typeof link.getBoundingClientRect !== "function") {
+            return;
+        }
+        const rect = link.getBoundingClientRect();
+        const need = rect.left + 400 + 12 + 300;
+        menu.classList.toggle(
+            "flip-flyouts",
+            typeof window.innerWidth === "number" && need > window.innerWidth
+        );
+    };
+
+    const openRow = (col, toggleButton) => {
+        menu.querySelectorAll(".drop-cat.open").forEach((other) => {
+            if (other !== col) {
+                other.classList.remove("open");
+            }
+        });
+        menu.querySelectorAll("[data-mega-cat-toggle]").forEach((other) => {
+            if (other !== toggleButton) {
+                other.setAttribute("aria-expanded", "false");
+            }
+        });
+        if (col) {
+            col.classList.add("open");
+        }
+        if (toggleButton) {
+            toggleButton.setAttribute("aria-expanded", "true");
+        }
+        positionFlyouts();
+    };
+
     const setMega = (open) => {
         item.classList.toggle("mega-open", open);
         toggle.setAttribute("aria-expanded", String(open));
-        menu.querySelectorAll("[data-mega-cat-toggle]").forEach((catToggle) => {
-            if (!open && isMobile()) {
-                catToggle.setAttribute("aria-expanded", "false");
-                const col = catToggle.closest(".drop-cat");
-                if (col) {
-                    col.classList.remove("open");
-                }
-            }
-        });
+        const megaLink = item.querySelector("[data-mega-link]");
+        if (megaLink) {
+            megaLink.setAttribute("aria-expanded", String(open));
+        }
+        if (!open) {
+            closeRows();
+        } else {
+            positionFlyouts();
+        }
     };
 
     toggle.addEventListener("click", (event) => {
@@ -39,11 +92,21 @@ window.NMOnePoint.initMegaMenu = function initMegaMenu() {
     menu.addEventListener("click", (event) => {
         const catToggle = event.target.closest("[data-mega-cat-toggle]");
         if (catToggle) {
-            const col = catToggle.closest(".drop-cat");
-            const open = catToggle.getAttribute("aria-expanded") === "true";
-            catToggle.setAttribute("aria-expanded", String(!open));
-            if (col) {
-                col.classList.toggle("open", !open);
+            if (isMobile()) {
+                const col = catToggle.closest(".drop-cat");
+                const open = catToggle.getAttribute("aria-expanded") === "true";
+                catToggle.setAttribute("aria-expanded", String(!open));
+                if (col) {
+                    col.classList.toggle("open", !open);
+                }
+            } else {
+                const col = catToggle.closest(".drop-cat");
+                const willOpen = col ? !col.classList.contains("open") : true;
+                if (willOpen) {
+                    openRow(col, catToggle);
+                } else {
+                    closeRows();
+                }
             }
             return;
         }
@@ -51,6 +114,23 @@ window.NMOnePoint.initMegaMenu = function initMegaMenu() {
             setMega(false);
         }
     });
+
+    /* Desktop hover opens one compact flyout; CSS keeps it visible while
+       the pointer travels from the row into the panel. */
+    if (canHover) {
+        menu.querySelectorAll(".drop-cat").forEach((col) => {
+            col.addEventListener("mouseenter", () => {
+                if (isMobile()) {
+                    return;
+                }
+                const toggleButton = col.querySelector("[data-mega-cat-toggle]");
+                openRow(col, toggleButton);
+            });
+        });
+        item.addEventListener("mouseenter", () => {
+            positionFlyouts();
+        });
+    }
 
     document.addEventListener("keydown", (event) => {
         if (event.key === "Escape" && item.classList.contains("mega-open")) {

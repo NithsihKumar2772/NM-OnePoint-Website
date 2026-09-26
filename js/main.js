@@ -324,6 +324,126 @@ window.NMOnePoint.detailUrl = function detailUrl(slug) {
     return "service.html?service=" + encodeURIComponent(slug);
 };
 
+/* Navigation display taxonomy: 6 dropdown labels mapped onto the 5 genuine
+   data categories. Labels use the exact approved names; anchors reuse the
+   existing category IDs; service membership references slugs (no duplicated
+   catalogue data). Coverage: 9 + 2 + 6 + 10 + 6 + 6 = 39 services. */
+
+window.NMOnePoint.NAV_GROUPS = [
+    {
+        key: "bim-services",
+        label: "BIM Services",
+        anchor: "services.html#cat-engineering-bim",
+        slugs: [
+            "autocad-2d-drafting-design",
+            "bim-modeling-lod-100-500",
+            "revit-architecture-modeling",
+            "revit-structure-modeling",
+            "revit-mep-modeling",
+            "as-built-bim-modeling",
+            "clash-detection",
+            "quantity-take-off-boq",
+            "shop-drawings",
+        ],
+    },
+    {
+        key: "laser-scanning",
+        label: "Laser Scanning",
+        anchor: "services.html#cat-engineering-bim",
+        slugs: ["scan-to-bim-services", "point-cloud-to-bim"],
+    },
+    {
+        key: "geospatial",
+        label: "Geospatial",
+        anchor: "services.html#cat-gis",
+        slugs: [
+            "qgis-mapping-spatial-analysis",
+            "arcgis-data-management-analysis",
+            "land-use-land-cover-mapping",
+            "geospatial-data-creation-editing",
+            "vector-raster-data-processing",
+            "custom-gis-project-support",
+        ],
+    },
+    {
+        key: "business-tax",
+        label: "Business & Tax Services",
+        anchor: "services.html#cat-business-tax",
+        slugs: [
+            "gst-registration",
+            "gst-monthly-return-filing",
+            "gst-annual-return-filing",
+            "udyam-msme-registration",
+            "lut-letter-of-undertaking-registration",
+            "professional-tax-registration-government-of-karnataka",
+            "pan-card-application",
+            "tan-registration",
+            "iec-registration",
+            "digital-signature-dsc",
+        ],
+    },
+    {
+        key: "online-government",
+        label: "Online Government & Digital",
+        anchor: "services.html#cat-online-government",
+        slugs: [
+            "government-job-online-applications",
+            "online-government-pan-card-application",
+            "passport-application-assistance",
+            "pf-provident-fund-withdrawal-application-assistance",
+            "online-bank-account-opening-assistance",
+            "all-online-e-sevai-services",
+        ],
+    },
+    {
+        key: "computer-repair",
+        label: "Computer System Repair & IT",
+        anchor: "services.html#cat-it-support",
+        slugs: [
+            "computer-system-repair-troubleshooting",
+            "os-update-optimization-windows",
+            "software-installation-all-types",
+            "virus-removal-system-cleanup",
+            "data-backup-recovery-assistance",
+            "hardware-diagnostics-performance-tuning",
+        ],
+    },
+];
+
+window.NMOnePoint.buildNavGroups = async function buildNavGroups() {
+    const built = await window.NMOnePoint.buildServiceIndex();
+    const bySlug = {};
+    built.index.forEach((service) => {
+        bySlug[service.slug] = service;
+    });
+    const seen = {};
+    let covered = 0;
+    const groups = window.NMOnePoint.NAV_GROUPS.map((group) => {
+        const items = [];
+        group.slugs.forEach((slug) => {
+            const service = bySlug[slug];
+            if (!service) {
+                console.warn("Nav group references unknown slug:", slug);
+                return;
+            }
+            if (seen[slug]) {
+                console.warn("Nav slug covered twice:", slug);
+                return;
+            }
+            seen[slug] = true;
+            covered += 1;
+            items.push(service);
+        });
+        return { key: group.key, label: group.label, anchor: group.anchor, items: items };
+    });
+    if (covered !== built.index.length) {
+        console.warn(
+            "Nav groups cover " + covered + " of " + built.index.length + " services."
+        );
+    }
+    return groups;
+};
+
 window.NMOnePoint.renderMegaMenu = async function renderMegaMenu() {
     const menu = document.querySelector("[data-mega-menu]");
     if (!menu) {
@@ -333,34 +453,27 @@ window.NMOnePoint.renderMegaMenu = async function renderMegaMenu() {
     const escapeHtml = window.NMOnePoint.escapeHtml;
 
     try {
-        const built = await window.NMOnePoint.buildServiceIndex();
-        if (!built.categories.length) {
+        const groups = await window.NMOnePoint.buildNavGroups();
+        if (!groups.length) {
             throw new Error("empty catalogue");
         }
-        const byCategory = {};
-        built.index.forEach((service) => {
-            if (!byCategory[service.categoryId]) {
-                byCategory[service.categoryId] = [];
-            }
-            byCategory[service.categoryId].push(service);
-        });
         menu.innerHTML =
-            '<div class="mega-panel">' +
-            built.categories
+            '<div class="mega-panel" data-drop-panel>' +
+            groups
                 .map(
-                    (category) =>
-                        '<div class="drop-cat" data-cat="' + escapeHtml(category.id) + '">' +
+                    (group) =>
+                        '<div class="drop-cat" data-cat="' + escapeHtml(group.key) + '">' +
                         '<div class="drop-cat-row">' +
-                        '<a class="drop-cat-link" href="services.html#cat-' + escapeHtml(category.id) + '">' +
-                        escapeHtml(category.title) +
+                        '<a class="drop-cat-link" href="' + escapeHtml(group.anchor) + '">' +
+                        escapeHtml(group.label) +
                         '<svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 4l4 4-4 4"/></svg>' +
                         "</a>" +
-                        '<button class="drop-sub-toggle" type="button" aria-expanded="false" aria-controls="drop-items-' + escapeHtml(category.id) + '" aria-label="Show ' + escapeHtml(category.title) + ' services" data-mega-cat-toggle>' +
+                        '<button class="drop-sub-toggle" type="button" aria-expanded="false" aria-controls="drop-items-' + escapeHtml(group.key) + '" aria-label="Show ' + escapeHtml(group.label) + ' services" data-mega-cat-toggle>' +
                         '<svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 6l4 4 4-4"/></svg>' +
                         "</button>" +
                         "</div>" +
-                        '<ul class="drop-sub" id="drop-items-' + escapeHtml(category.id) + '">' +
-                        (byCategory[category.id] || [])
+                        '<ul class="drop-sub" id="drop-items-' + escapeHtml(group.key) + '">' +
+                        group.items
                             .map(
                                 (service) =>
                                     '<li><a href="' + escapeHtml(window.NMOnePoint.detailUrl(service.slug)) + '">' +
@@ -372,9 +485,6 @@ window.NMOnePoint.renderMegaMenu = async function renderMegaMenu() {
                         "</div>"
                 )
                 .join("") +
-            '<a class="drop-all" href="services.html">View all ' +
-            built.index.length +
-            ' services <span aria-hidden="true">&rarr;</span></a>' +
             "</div>";
     } catch (error) {
         console.warn("Mega menu failed to load:", error);

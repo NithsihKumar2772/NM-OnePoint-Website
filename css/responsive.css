@@ -8,10 +8,6 @@
         align-items: center;
     }
 
-    .header-cta {
-        display: none;
-    }
-
     .site-nav ul[data-nav-menu][hidden] {
         display: none;
     }
@@ -146,8 +142,8 @@
         display: none;
     }
 
-    .drop-cat:hover > .drop-cat-link,
-    .drop-cat:focus-within > .drop-cat-link {
+    .drop-cat:hover .drop-cat-link,
+    .drop-cat:focus-within .drop-cat-link {
         background: transparent;
         color: var(--color-mint) !important;
     }
@@ -194,12 +190,18 @@
         display: block;
     }
 
-    .drop-cat:hover > .drop-sub,
-    .drop-cat:focus-within > .drop-sub {
+    .drop-cat:hover .drop-sub,
+    .drop-cat:focus-within .drop-sub {
         visibility: visible;
         opacity: 1;
         transform: none;
         pointer-events: auto;
+    }
+
+    /* Drill-down detail view is desktop-only; mobile keeps the accordion. */
+
+    .drop-detail {
+        display: none;
     }
 
     .drop-sub a {
@@ -428,9 +430,9 @@
         margin-left: 0;
     }
 
-    .header-cta {
-        padding: 0.5rem 0.9rem;
+    .nav-book a {
         font-size: 0.82rem;
+        padding: 0.5rem 0.9rem;
     }
 }
 
@@ -446,6 +448,26 @@
         clip-path: inset(50%);
         border: 0;
         white-space: nowrap;
+    }
+}
+
+/* ---------- Desktop nav baseline: one aligned row, no wrapping (861px and up) ---------- */
+
+@media (min-width: 861px) {
+    .site-nav > ul > li:not(.nav-book) {
+        display: flex;
+        align-items: center;
+    }
+
+    .site-nav > ul > li > a {
+        display: inline-flex;
+        align-items: center;
+        min-height: 44px;
+        white-space: nowrap;
+    }
+
+    .nav-item-has-mega .mega-toggle {
+        display: none;
     }
 }
 
