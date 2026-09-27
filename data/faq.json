@@ -4,7 +4,7 @@
         {
             "id": "services-offered",
             "question": "What services does NM OnePoint provide?",
-            "answer": "NM OnePoint covers five categories: Business & Tax Services, Engineering & BIM Services, Online Government & Digital Services, Computer System Repair & IT Services, and GIS Services with QGIS and ArcGIS."
+            "answer": "NM OnePoint covers six categories: BIM Services, Laser Scanning, Geospatial, Business & Tax Services, Online Government & Digital, and Computer System Repair & IT."
         },
         {
             "id": "business-tax",
@@ -13,12 +13,17 @@
         },
         {
             "id": "bim",
-            "question": "Which BIM and engineering services are offered?",
-            "answer": "AutoCAD 2D drafting and design, Scan to BIM, Point Cloud to BIM, BIM modeling (LOD 100-500), Revit architecture, structure and MEP modeling, as-built BIM modeling, clash detection, quantity take-off (BOQ), and shop drawings."
+            "question": "Which BIM services are offered?",
+            "answer": "AutoCAD 2D drafting and design, BIM modeling (LOD 100-500), Revit architecture, structure and MEP modeling, as-built BIM modeling, clash detection, quantity take-off (BOQ), and shop drawings."
+        },
+        {
+            "id": "laser-scanning",
+            "question": "Which laser scanning services are offered?",
+            "answer": "Scan to BIM services and Point Cloud to BIM."
         },
         {
             "id": "gis",
-            "question": "Which GIS services are offered?",
+            "question": "Which geospatial services are offered?",
             "answer": "QGIS mapping and spatial analysis, ArcGIS data management and analysis, land use and land cover mapping, geospatial data creation and editing, vector and raster data processing, and custom GIS project support."
         },
         {

@@ -17,7 +17,7 @@
         "facebook": "[placeholder]"
     },
     "stats": [
-        { "value": "05", "label": "Service categories" },
+        { "value": "06", "label": "Service categories" },
         { "value": "39", "label": "Listed services" },
         { "value": "04", "label": "Defined workflow steps" },
         { "value": "01", "label": "Single point of contact" }

@@ -40,7 +40,9 @@ window.NMOnePoint.serviceIcons = {
     globe:
         '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.5 3 14 0 18M12 3c-3 3.5-3 14 0 18"/></svg>',
     filetext:
-        '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M6 2h9l5 5v15H6z"/><path d="M14 2v6h6M9 13l2 2 4-4"/></svg>'
+        '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M6 2h9l5 5v15H6z"/><path d="M14 2v6h6M9 13l2 2 4-4"/></svg>',
+        scan:
+            '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 12h4l2-6 4 12 2-6h6"/></svg>',
 };
 
 window.NMOnePoint.renderServices = async function renderServices() {
@@ -328,126 +330,6 @@ window.NMOnePoint.categoryUrl = function categoryUrl(key) {
     return "category.html?category=" + encodeURIComponent(key);
 };
 
-/* Navigation display taxonomy: 6 dropdown labels mapped onto the 5 genuine
-   data categories. Labels use the exact approved names; anchors reuse the
-   existing category IDs; service membership references slugs (no duplicated
-   catalogue data). Coverage: 9 + 2 + 6 + 10 + 6 + 6 = 39 services. */
-
-window.NMOnePoint.NAV_GROUPS = [
-    {
-        key: "bim-services",
-        label: "BIM Services",
-        anchor: "services.html#cat-engineering-bim",
-        slugs: [
-            "autocad-2d-drafting-design",
-            "bim-modeling-lod-100-500",
-            "revit-architecture-modeling",
-            "revit-structure-modeling",
-            "revit-mep-modeling",
-            "as-built-bim-modeling",
-            "clash-detection",
-            "quantity-take-off-boq",
-            "shop-drawings",
-        ],
-    },
-    {
-        key: "laser-scanning",
-        label: "Laser Scanning",
-        anchor: "services.html#cat-engineering-bim",
-        slugs: ["scan-to-bim-services", "point-cloud-to-bim"],
-    },
-    {
-        key: "geospatial",
-        label: "Geospatial",
-        anchor: "services.html#cat-gis",
-        slugs: [
-            "qgis-mapping-spatial-analysis",
-            "arcgis-data-management-analysis",
-            "land-use-land-cover-mapping",
-            "geospatial-data-creation-editing",
-            "vector-raster-data-processing",
-            "custom-gis-project-support",
-        ],
-    },
-    {
-        key: "business-tax",
-        label: "Business & Tax Services",
-        anchor: "services.html#cat-business-tax",
-        slugs: [
-            "gst-registration",
-            "gst-monthly-return-filing",
-            "gst-annual-return-filing",
-            "udyam-msme-registration",
-            "lut-letter-of-undertaking-registration",
-            "professional-tax-registration-government-of-karnataka",
-            "pan-card-application",
-            "tan-registration",
-            "iec-registration",
-            "digital-signature-dsc",
-        ],
-    },
-    {
-        key: "online-government",
-        label: "Online Government & Digital",
-        anchor: "services.html#cat-online-government",
-        slugs: [
-            "government-job-online-applications",
-            "online-government-pan-card-application",
-            "passport-application-assistance",
-            "pf-provident-fund-withdrawal-application-assistance",
-            "online-bank-account-opening-assistance",
-            "all-online-e-sevai-services",
-        ],
-    },
-    {
-        key: "computer-repair",
-        label: "Computer System Repair & IT",
-        anchor: "services.html#cat-it-support",
-        slugs: [
-            "computer-system-repair-troubleshooting",
-            "os-update-optimization-windows",
-            "software-installation-all-types",
-            "virus-removal-system-cleanup",
-            "data-backup-recovery-assistance",
-            "hardware-diagnostics-performance-tuning",
-        ],
-    },
-];
-
-window.NMOnePoint.buildNavGroups = async function buildNavGroups() {
-    const built = await window.NMOnePoint.buildServiceIndex();
-    const bySlug = {};
-    built.index.forEach((service) => {
-        bySlug[service.slug] = service;
-    });
-    const seen = {};
-    let covered = 0;
-    const groups = window.NMOnePoint.NAV_GROUPS.map((group) => {
-        const items = [];
-        group.slugs.forEach((slug) => {
-            const service = bySlug[slug];
-            if (!service) {
-                console.warn("Nav group references unknown slug:", slug);
-                return;
-            }
-            if (seen[slug]) {
-                console.warn("Nav slug covered twice:", slug);
-                return;
-            }
-            seen[slug] = true;
-            covered += 1;
-            items.push(service);
-        });
-        return { key: group.key, label: group.label, anchor: group.anchor, items: items };
-    });
-    if (covered !== built.index.length) {
-        console.warn(
-            "Nav groups cover " + covered + " of " + built.index.length + " services."
-        );
-    }
-    return groups;
-};
-
 window.NMOnePoint.renderMegaMenu = async function renderMegaMenu() {
     const menu = document.querySelector("[data-mega-menu]");
     if (!menu) {
@@ -457,17 +339,17 @@ window.NMOnePoint.renderMegaMenu = async function renderMegaMenu() {
     const escapeHtml = window.NMOnePoint.escapeHtml;
 
     try {
-        const groups = await window.NMOnePoint.buildNavGroups();
-        if (!groups.length) {
+        const built = await window.NMOnePoint.buildServiceIndex();
+        if (!built.categories.length) {
             throw new Error("empty catalogue");
         }
         menu.innerHTML =
             '<div class="mega-panel" data-drop-panel>' +
-            groups
+            built.categories
                 .map(
-                    (group) =>
-                        '<a class="drop-cat-link" href="' + escapeHtml(window.NMOnePoint.categoryUrl(group.key)) + '">' +
-                        escapeHtml(group.label) +
+                    (category) =>
+                        '<a class="drop-cat-link" href="' + escapeHtml(window.NMOnePoint.categoryUrl(category.id)) + '">' +
+                        escapeHtml(category.title) +
                         "</a>"
                 )
                 .join("") +
@@ -646,10 +528,10 @@ window.NMOnePoint.renderCategoryDetail = async function renderCategoryDetail() {
     const key = params.get("category") || "";
 
     try {
-        const groups = await window.NMOnePoint.buildNavGroups();
-        const group = groups.filter((item) => item.key === key)[0];
+        const built = await window.NMOnePoint.buildServiceIndex();
+        const category = built.categories.filter((cat) => cat.id === key)[0];
 
-        if (!group) {
+        if (!category) {
             mount.innerHTML =
                 '<p class="eyebrow">Service category</p>' +
                 "<h1>Category not found</h1>" +
@@ -657,32 +539,33 @@ window.NMOnePoint.renderCategoryDetail = async function renderCategoryDetail() {
             return;
         }
 
-        const built = await window.NMOnePoint.buildServiceIndex();
-        const firstCategoryId = group.items.length ? group.items[0].categoryId : "";
-        const dataCategory = built.categories.filter((cat) => cat.id === firstCategoryId)[0] || {};
-        const tagline = dataCategory.tagline || "";
-
-        document.title = group.label + " | NM OnePoint Services";
+        const items = Array.isArray(category.items) ? category.items : [];
+        document.title = category.title + " | NM OnePoint Services";
         const metaDescription = document.querySelector('meta[name="description"]');
         if (metaDescription) {
             metaDescription.setAttribute(
                 "content",
-                group.label + " at NM OnePoint Services: " + group.items.length + " listed services. One Point. Multiple Solutions."
+                category.title + " at NM OnePoint Services: " + items.length + " listed services. One Point. Multiple Solutions."
             );
         }
 
         mount.innerHTML =
-            '<nav class="detail-crumb" aria-label="Breadcrumb"><a href="index.html">Home</a> <span aria-hidden="true">/</span> <a href="services.html">Services</a> <span aria-hidden="true">/</span> <span>' + escapeHtml(group.label) + "</span></nav>" +
-            '<p class="eyebrow">' + group.items.length + ' listed services</p>' +
-            "<h1>" + escapeHtml(group.label) + "</h1>" +
-            (tagline ? '<p class="section-lead">' + escapeHtml(tagline) + "</p>" : "") +
+            '<nav class="detail-crumb" aria-label="Breadcrumb"><a href="index.html">Home</a> <span aria-hidden="true">/</span> <a href="services.html">Services</a> <span aria-hidden="true">/</span> <span>' + escapeHtml(category.title) + "</span></nav>" +
+            '<p class="eyebrow">' + items.length + ' listed services</p>' +
+            "<h1>" + escapeHtml(category.title) + "</h1>" +
+            (category.tagline ? '<p class="section-lead">' + escapeHtml(category.tagline) + "</p>" : "") +
             '<ul class="dir-list">' +
-            group.items
+            items
                 .map(
-                    (service) =>
-                        '<li data-dir-item><a href="' + escapeHtml(window.NMOnePoint.detailUrl(service.slug)) + '">' +
-                        escapeHtml(service.name) +
-                        '<span aria-hidden="true">&rarr;</span></a></li>'
+                    (name) => {
+                        const found = built.index.filter(
+                            (entry) => entry.categoryId === category.id && entry.name === name
+                        )[0];
+                        const slug = found ? found.slug : window.NMOnePoint.slugify(name);
+                        return '<li data-dir-item><a href="' + escapeHtml(window.NMOnePoint.detailUrl(slug)) + '">' +
+                            escapeHtml(name) +
+                            '<span aria-hidden="true">&rarr;</span></a></li>';
+                    }
                 )
                 .join("") +
             "</ul>" +
