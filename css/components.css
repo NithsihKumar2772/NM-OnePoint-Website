@@ -1993,6 +1993,7 @@ form select:focus {
     .site-brand-text,
     .brand-w,
     .hero-bg,
+    .hero-bg-photo img,
     .hero-scan,
     .hero-scroll span,
     .nav-whatsapp a,
@@ -2107,6 +2108,9 @@ a.bento-card:hover h3 {
 .hero-cine { min-height: min(92vh, 880px); display: flex; align-items: center; }
 .hero-bg { position: absolute; inset: 0; overflow: hidden; animation: hero-zoom 18s ease-in-out infinite alternate; }
 .hero-bg svg { width: 100%; height: 100%; display: block; }
+.hero-bg-photo img { width: 100%; height: 100%; object-fit: cover; display: block; animation: hero-drift 26s ease-in-out infinite alternate; }
+.hero-shade { position: absolute; inset: 0; background: linear-gradient(102deg, rgba(5, 15, 31, 0.93) 18%, rgba(5, 15, 31, 0.62) 52%, rgba(5, 15, 31, 0.28) 100%); pointer-events: none; }
+@keyframes hero-drift { from { transform: scale(1.02) translateX(0); } to { transform: scale(1.09) translateX(-1.5%); } }
 @keyframes hero-zoom { from { transform: scale(1); } to { transform: scale(1.06); } }
 .hero-scan { position: absolute; left: 0; right: 0; top: -20%; height: 20%; background: linear-gradient(transparent, rgba(45, 212, 191, 0.12), transparent); animation: tech-scan 9s ease-in-out infinite; pointer-events: none; }
 .hero-inner { position: relative; z-index: 1; width: 100%; }

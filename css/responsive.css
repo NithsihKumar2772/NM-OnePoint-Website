@@ -444,3 +444,15 @@
         grid-template-columns: repeat(3, 1fr);
     }
 }
+
+
+/* ---------- Homepage hero photo ---------- */
+
+@media (max-width: 768px) {
+    .hero-shade {
+        background: linear-gradient(180deg, rgba(5, 15, 31, 0.94) 10%, rgba(5, 15, 31, 0.78) 60%, rgba(5, 15, 31, 0.55) 100%);
+    }
+    .hero-bg-photo img {
+        object-position: 68% center;
+    }
+}
