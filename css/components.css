@@ -1549,13 +1549,35 @@ form select:focus {
     display: none;
 }
 
+.nav-whatsapp a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    min-width: 44px;
+    min-height: 44px;
+    flex: none;
+    padding: 2px;
+    background: transparent;
+    border: none;
+    margin-left: var(--space-xs);
+    transition: transform 250ms ease;
+}
+
+.nav-whatsapp a:hover {
+    transform: scale(1.05);
+}
+
 .nav-whatsapp a::after {
     display: none;
 }
 
-.nav-whatsapp a:hover {
-    background: rgba(45, 212, 191, 0.12);
-    color: #ffffff !important;
+.wa-img {
+    width: auto;
+    height: 34px;
+    border-radius: 8px;
+    object-fit: contain;
+    display: block;
 }
 
 .nav-book a {
@@ -1762,6 +1784,191 @@ form select:focus {
     min-width: 0;
 }
 
+/* ---------- Homepage 22: featured, steps, scale band ---------- */
+
+.hero-domains {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-bold);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-mint);
+    margin-bottom: var(--space-md);
+}
+
+.feat-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+    margin-top: var(--space-xl);
+}
+
+.feat-card {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-background);
+    padding: var(--space-xl);
+    transition: transform var(--transition-base), border-color var(--transition-base),
+        box-shadow var(--transition-base);
+}
+
+.feat-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--color-accent);
+    box-shadow: var(--shadow-md);
+}
+
+.feat-card h3 {
+    font-size: 1.2rem;
+    font-weight: var(--font-weight-black);
+    margin-bottom: var(--space-xs);
+}
+
+.feat-card p {
+    color: var(--color-muted);
+    font-size: 0.95rem;
+}
+
+.feat-cat {
+    font-size: 0.75rem !important;
+    font-weight: var(--font-weight-bold);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-accent-ink) !important;
+    margin-bottom: var(--space-xs);
+}
+
+.feat-card .bento-link {
+    margin-top: auto;
+    padding-top: var(--space-md);
+}
+
+.steps-three {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+    margin-top: var(--space-xl);
+}
+
+.scale-band {
+    background: var(--color-navy);
+    border-top: 1px solid var(--color-navy-deep);
+    border-bottom: 1px solid var(--color-navy-deep);
+    padding-top: var(--space-xxl);
+    padding-bottom: var(--space-xxl);
+}
+
+.scale-band .stats-grid {
+    max-width: 720px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+.scale-band .stat-value {
+    color: #ffffff;
+}
+
+.scale-band .stat-label {
+    color: var(--color-dark-muted);
+}
+
+
+/* TEMP-DEV 23C: WhatsApp icon animation variants. Preview with ?wastyle=1..20
+   (dev-only switcher in js/navigation.js). Production default is
+   .whatsapp-style-20. Variants are isolated here for easy removal. */
+
+.nav-whatsapp a[class*="whatsapp-style-"] {
+    transition: transform 200ms ease, box-shadow 200ms ease, background var(--transition-base);
+}
+
+/* 01 Gentle Pulse */
+.whatsapp-style-01 .wa-img { animation: wa-pulse 2.4s ease-in-out infinite; }
+@keyframes wa-pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.06); } }
+
+/* 02 Soft Floating */
+.whatsapp-style-02 .wa-img { animation: wa-float 3s ease-in-out infinite; }
+@keyframes wa-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+
+/* 03 Small Bounce */
+.whatsapp-style-03 .wa-img { animation: wa-bounce 2s ease-out infinite; }
+@keyframes wa-bounce { 0%, 100% { transform: translateY(0); } 30% { transform: translateY(-4px); } 55% { transform: translateY(0); } }
+
+/* 04 Hover Scale */
+.whatsapp-style-04:hover .wa-img { transform: scale(1.1); }
+.whatsapp-style-04 .wa-img { transition: transform 200ms ease; }
+
+/* 05 Hover Glow */
+.whatsapp-style-05:hover { box-shadow: 0 0 14px rgba(37, 211, 102, 0.45); }
+
+/* 06 Pulse + Glow */
+.whatsapp-style-06 .wa-img { animation: wa-pulse 2.4s ease-in-out infinite; }
+.whatsapp-style-06 { animation: wa-glow 2.4s ease-in-out infinite; }
+@keyframes wa-glow { 0%, 100% { box-shadow: 0 0 0 rgba(37, 211, 102, 0); } 50% { box-shadow: 0 0 12px rgba(37, 211, 102, 0.4); } }
+
+/* 07 Float + Hover Scale */
+.whatsapp-style-07 .wa-img { animation: wa-float 3s ease-in-out infinite; transition: transform 200ms ease; }
+.whatsapp-style-07:hover .wa-img { animation-play-state: paused; transform: scale(1.12); }
+
+/* 08 Breathing Effect */
+.whatsapp-style-08 .wa-img { animation: wa-breathe 3.5s ease-in-out infinite; }
+@keyframes wa-breathe { 0%, 100% { opacity: 0.85; transform: scale(1); } 50% { opacity: 1; transform: scale(1.03); } }
+
+/* 09 Subtle Shake */
+.whatsapp-style-09 .wa-img { animation: wa-shake 3s ease-in-out infinite; }
+@keyframes wa-shake { 0%, 88%, 100% { transform: rotate(0); } 90% { transform: rotate(-4deg); } 94% { transform: rotate(4deg); } 97% { transform: rotate(0); } }
+
+/* 10 Micro Bounce */
+.whatsapp-style-10 .wa-img { animation: wa-micro 1.6s ease-in-out infinite; }
+@keyframes wa-micro { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-2px); } }
+
+/* 11 Soft Ring Pulse */
+.whatsapp-style-11::after { content: ""; position: absolute; inset: 0; border-radius: 50%; border: 2px solid rgba(37, 211, 102, 0.55); animation: wa-ring 2.2s ease-out infinite; pointer-events: none; }
+@keyframes wa-ring { 0% { transform: scale(1); opacity: 0.7; } 100% { transform: scale(1.35); opacity: 0; } }
+
+/* 12 Ripple Ring */
+.whatsapp-style-12::after, .whatsapp-style-12::before { content: ""; position: absolute; inset: 0; border-radius: 50%; border: 2px solid rgba(37, 211, 102, 0.5); animation: wa-ring 2.4s ease-out infinite; pointer-events: none; }
+.whatsapp-style-12::before { animation-delay: 1.2s; }
+
+/* 13 Hover Lift */
+.whatsapp-style-13 { transition: transform 200ms ease, box-shadow 200ms ease; }
+.whatsapp-style-13:hover { transform: translateY(-3px); box-shadow: 0 6px 14px rgba(0, 0, 0, 0.3); }
+
+/* 14 Hover Tilt */
+.whatsapp-style-14 .wa-img { transition: transform 200ms ease; }
+.whatsapp-style-14:hover .wa-img { transform: rotate(-6deg) scale(1.05); }
+
+/* 15 Hover Zoom + Glow */
+.whatsapp-style-15 .wa-img { transition: transform 200ms ease; }
+.whatsapp-style-15:hover .wa-img { transform: scale(1.12); }
+.whatsapp-style-15:hover { box-shadow: 0 0 14px rgba(37, 211, 102, 0.45); }
+
+/* 16 Slow Float + Glow */
+.whatsapp-style-16 .wa-img { animation: wa-float-slow 4s ease-in-out infinite; }
+.whatsapp-style-16 { animation: wa-glow-faint 4s ease-in-out infinite; }
+@keyframes wa-float-slow { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-2px); } }
+@keyframes wa-glow-faint { 0%, 100% { box-shadow: 0 0 0 rgba(37, 211, 102, 0); } 50% { box-shadow: 0 0 8px rgba(37, 211, 102, 0.3); } }
+
+/* 17 Attention Pulse */
+.whatsapp-style-17 .wa-img { animation: wa-attention 4s ease-in-out infinite; }
+@keyframes wa-attention { 0%, 90%, 100% { transform: scale(1); } 94% { transform: scale(1.08); } }
+
+/* 18 Soft Wobble */
+.whatsapp-style-18 .wa-img { animation: wa-wobble 3s ease-in-out infinite; }
+@keyframes wa-wobble { 0%, 100% { transform: rotate(0); } 25% { transform: rotate(3deg); } 75% { transform: rotate(-3deg); } }
+
+/* 19 Scale + Shadow Pulse */
+.whatsapp-style-19 .wa-img { animation: wa-pulse 2.8s ease-in-out infinite; }
+.whatsapp-style-19 { animation: wa-shadow-pulse 2.8s ease-in-out infinite; }
+@keyframes wa-shadow-pulse { 0%, 100% { box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25); } 50% { box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35); } }
+
+/* 20 Premium Minimal Motion (production default): calm idle, gentle hover. */
+.whatsapp-style-20 .wa-img { transition: transform 200ms ease; }
+.whatsapp-style-20:hover .wa-img { transform: scale(1.06); }
+.whatsapp-style-20:hover { box-shadow: 0 0 10px rgba(37, 211, 102, 0.35); }
+
+
 /* ---------- Reduced motion: content fully visible, effects off ---------- */
 
 @media (prefers-reduced-motion: reduce) {
@@ -1783,8 +1990,19 @@ form select:focus {
     .ticker-track,
     .mega-menu,
     .site-brand-logo,
-    .site-brand-text {
+    .site-brand-text,
+    .nav-whatsapp a,
+    .nav-whatsapp a .wa-img,
+    .nav-whatsapp a::before,
+    .nav-whatsapp a::after {
         animation: none;
+    }
+
+    .nav-whatsapp a,
+    .nav-whatsapp a:hover {
+        transition: none;
+        transform: none;
+        box-shadow: none;
     }
 
     .mega-menu {
@@ -1796,4 +2014,20 @@ form select:focus {
     .back-to-top:hover {
         transform: none;
     }
+}
+
+
+/* ---------- Homepage 22: linked bento cards ---------- */
+
+a.bento-card {
+    color: var(--color-text);
+    text-decoration: none;
+}
+
+a.bento-card h3 {
+    color: var(--color-text);
+}
+
+a.bento-card:hover h3 {
+    color: var(--color-primary);
 }

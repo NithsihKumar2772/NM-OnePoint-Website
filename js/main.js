@@ -698,6 +698,59 @@ window.NMOnePoint.renderCategoryDetail = async function renderCategoryDetail() {
     }
 };
 
+window.NMOnePoint.FEATURED_SLUGS = [
+    "gst-registration",
+    "scan-to-bim-services",
+    "revit-architecture-modeling",
+    "qgis-mapping-spatial-analysis",
+    "computer-system-repair-troubleshooting",
+    "udyam-msme-registration",
+];
+
+window.NMOnePoint.renderFeatured = async function renderFeatured() {
+    const grid = document.querySelector("[data-featured-grid]");
+    if (!grid) {
+        return;
+    }
+
+    const escapeHtml = window.NMOnePoint.escapeHtml;
+
+    try {
+        const built = await window.NMOnePoint.buildServiceIndex();
+        const wanted = window.NMOnePoint.FEATURED_SLUGS;
+        const bySlug = {};
+        built.index.forEach((service) => {
+            bySlug[service.slug] = service;
+        });
+        const featured = wanted
+            .map((slug) => bySlug[slug])
+            .filter((service) => !!service);
+        if (!featured.length) {
+            return;
+        }
+        grid.innerHTML = featured
+            .map(
+                (service, index) =>
+                    '<article class="feat-card" data-reveal="up" data-delay="' +
+                    (index % 3) * 100 +
+                    '">' +
+                    '<span class="bento-icon" aria-hidden="true">' +
+                    (window.NMOnePoint.serviceIcons[service.icon] || "") +
+                    "</span>" +
+                    "<p class=\"feat-cat\">" + escapeHtml(service.categoryTitle) + "</p>" +
+                    "<h3>" + escapeHtml(service.name) + "</h3>" +
+                    "<p>" + escapeHtml(service.tagline || "") + "</p>" +
+                    '<a class="bento-link" href="' + escapeHtml(window.NMOnePoint.detailUrl(service.slug)) + '">Learn More' +
+                    '<span class="bento-arrow" aria-hidden="true">&rarr;</span>' +
+                    "</a>" +
+                    "</article>"
+            )
+            .join("");
+    } catch (error) {
+        console.warn("Featured services failed to load:", error);
+    }
+};
+
 window.NMOnePoint.init = async function init() {
     await window.NMOnePoint.loadComponent(
         '[data-component="header"]',
@@ -771,6 +824,17 @@ window.NMOnePoint.init = async function init() {
             await window.NMOnePoint.renderCategoryDetail();
         } catch (error) {
             console.warn("Category detail render failed:", error);
+        }
+    }
+
+    if (
+        window.NMOnePoint.renderFeatured &&
+        typeof window.NMOnePoint.renderFeatured === "function"
+    ) {
+        try {
+            await window.NMOnePoint.renderFeatured();
+        } catch (error) {
+            console.warn("Featured render failed:", error);
         }
     }
 
