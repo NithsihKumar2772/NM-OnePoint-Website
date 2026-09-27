@@ -61,11 +61,13 @@
     }
 
     .nav-whatsapp a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 48px;
         border: 1px solid rgba(45, 212, 191, 0.5);
         border-radius: var(--radius-md);
-        text-align: center;
         margin-top: var(--space-md);
-        font-size: 1.1rem;
     }
 
     /* Services dropdown becomes a stacked accordion inside the mobile panel */
@@ -390,5 +392,24 @@
     .process[data-revealed="true"] .process-fill,
     .process-fill {
         transform: none;
+    }
+}
+
+
+/* ---------- Homepage 22 grids ---------- */
+
+@media (min-width: 768px) {
+    .feat-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .feat-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .steps-three {
+        grid-template-columns: repeat(3, 1fr);
     }
 }

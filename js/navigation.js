@@ -178,6 +178,22 @@ window.NMOnePoint.initNavigation = function initNavigation() {
         window.addEventListener("scroll", updateHeaderState, { passive: true });
     }
 
+    /* TEMP-DEV 23C: WhatsApp animation preview switcher (?wastyle=1..20).
+       Isolated and removable; production default stays whatsapp-style-20. */
+    try {
+        const styleParam = new URLSearchParams(window.location.search || "").get("wastyle");
+        const styleNumber = parseInt(styleParam || "", 10);
+        if (styleNumber >= 1 && styleNumber <= 20) {
+            const waLink = document.querySelector("[data-whatsapp-link]");
+            if (waLink) {
+                waLink.className = waLink.className.replace(/whatsapp-style-\d+/g, "").trim();
+                waLink.classList.add("whatsapp-style-" + String(styleNumber).padStart(2, "0"));
+            }
+        }
+    } catch (previewError) {
+        console.warn("WhatsApp preview switch failed:", previewError);
+    }
+
     const toTop = document.querySelector("[data-back-to-top]");
     if (toTop && typeof window.addEventListener === "function") {
         const updateToTop = () => {
