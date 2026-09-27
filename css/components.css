@@ -126,7 +126,19 @@
     background: #ffffff;
     object-fit: cover;
     transition: transform var(--transition-base);
-    animation: brand-mark-in 750ms var(--ease-out) backwards;
+    animation: brand-mark-in 700ms var(--ease-out) backwards, brand-sheen 1.5s ease-in-out 200ms backwards;
+}
+
+@keyframes brand-sheen {
+    from {
+        filter: brightness(1);
+    }
+    35% {
+        filter: brightness(1.22);
+    }
+    to {
+        filter: brightness(1);
+    }
 }
 
 .site-brand:hover .site-brand-logo {
@@ -145,7 +157,7 @@
 @keyframes brand-mark-in {
     from {
         opacity: 0;
-        transform: scale(0.92);
+        transform: scale(0.94);
     }
     to {
         opacity: 1;
@@ -2098,9 +2110,9 @@ a.bento-card:hover h3 {
 .brand-w { display: inline-block; animation: brand-part 900ms cubic-bezier(0.22, 0.9, 0.28, 1) backwards; }
 .brand-w-one { animation-delay: 120ms; }
 .brand-w-svc { animation-delay: 240ms; }
-@keyframes brand-part-nm { from { opacity: 0; transform: translateX(-14px); } to { opacity: 1; transform: none; } }
-@keyframes brand-part-one { from { opacity: 0; transform: translateX(14px); } to { opacity: 1; transform: none; } }
-@keyframes brand-part-svc { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+@keyframes brand-part-nm { from { opacity: 0; filter: blur(6px); transform: translateX(-10px); } to { opacity: 1; filter: blur(0); transform: none; } }
+@keyframes brand-part-one { from { opacity: 0; filter: blur(6px); transform: translateX(10px); } to { opacity: 1; filter: blur(0); transform: none; } }
+@keyframes brand-part-svc { from { opacity: 0; filter: blur(6px); transform: translateY(5px); } to { opacity: 1; filter: blur(0); transform: none; } }
 .brand-w-nm { animation-name: brand-part-nm; }
 .brand-w-one { animation-name: brand-part-one; }
 .brand-w-svc { animation-name: brand-part-svc; }
