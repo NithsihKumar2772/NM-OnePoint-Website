@@ -1,6 +1,47 @@
 {
-    "note": "Genuine NM OnePoint service catalogue transcribed from the official NM OnePoint services flyer and YouTube banner. Category names and service names match the source material.",
+    "note": "Genuine NM OnePoint service catalogue transcribed from the official NM OnePoint services flyer and YouTube banner. Service names match the source material; customer-facing category names follow the approved six-area taxonomy.",
     "services": [
+        {
+            "id": "bim-services",
+            "icon": "cube",
+            "title": "BIM Services",
+            "tagline": "Model-based support for building projects, from drafting to coordination.",
+            "items": [
+                "AutoCAD 2D Drafting & Design",
+                "BIM Modeling (LOD 100 - 500)",
+                "Revit Architecture Modeling",
+                "Revit Structure Modeling",
+                "Revit MEP Modeling",
+                "As-Built BIM Modeling",
+                "Clash Detection",
+                "Quantity Take-Off (BOQ)",
+                "Shop Drawings"
+            ]
+        },
+        {
+            "id": "laser-scanning",
+            "icon": "scan",
+            "title": "Laser Scanning",
+            "tagline": "Capture existing conditions into accurate BIM-ready data.",
+            "items": [
+                "Scan to BIM Services",
+                "Point Cloud to BIM"
+            ]
+        },
+        {
+            "id": "geospatial",
+            "icon": "globe",
+            "title": "Geospatial",
+            "tagline": "Mapping and spatial data work with QGIS and ArcGIS.",
+            "items": [
+                "QGIS Mapping & Spatial Analysis",
+                "ArcGIS Data Management & Analysis",
+                "Land Use / Land Cover Mapping",
+                "Geospatial Data Creation & Editing",
+                "Vector & Raster Data Processing",
+                "Custom GIS Project Support"
+            ]
+        },
         {
             "id": "business-tax",
             "icon": "briefcase",
@@ -20,28 +61,9 @@
             ]
         },
         {
-            "id": "engineering-bim",
-            "icon": "cube",
-            "title": "Engineering & BIM Services",
-            "tagline": "Drafting, modeling and coordination support for building projects.",
-            "items": [
-                "AutoCAD 2D Drafting & Design",
-                "Scan to BIM Services",
-                "Point Cloud to BIM",
-                "BIM Modeling (LOD 100 - 500)",
-                "Revit Architecture Modeling",
-                "Revit Structure Modeling",
-                "Revit MEP Modeling",
-                "As-Built BIM Modeling",
-                "Clash Detection",
-                "Quantity Take-Off (BOQ)",
-                "Shop Drawings"
-            ]
-        },
-        {
             "id": "online-government",
             "icon": "filetext",
-            "title": "Online Government & Digital Services",
+            "title": "Online Government & Digital",
             "tagline": "Help with online applications and everyday e-services.",
             "items": [
                 "Government Job Online Applications",
@@ -53,9 +75,9 @@
             ]
         },
         {
-            "id": "it-support",
+            "id": "computer-repair",
             "icon": "cpu",
-            "title": "Computer System Repair & IT Services",
+            "title": "Computer System Repair & IT",
             "tagline": "Repair, setup and maintenance for computers and office IT.",
             "items": [
                 "Computer System Repair & Troubleshooting",
@@ -64,20 +86,6 @@
                 "Virus Removal & System Cleanup",
                 "Data Backup & Recovery Assistance",
                 "Hardware Diagnostics & Performance Tuning"
-            ]
-        },
-        {
-            "id": "gis",
-            "icon": "globe",
-            "title": "GIS Services (QGIS & ArcGIS)",
-            "tagline": "Mapping and spatial data work with QGIS and ArcGIS.",
-            "items": [
-                "QGIS Mapping & Spatial Analysis",
-                "ArcGIS Data Management & Analysis",
-                "Land Use / Land Cover Mapping",
-                "Geospatial Data Creation & Editing",
-                "Vector & Raster Data Processing",
-                "Custom GIS Project Support"
             ]
         }
     ]

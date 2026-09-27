@@ -413,3 +413,16 @@
         grid-template-columns: repeat(3, 1fr);
     }
 }
+
+
+@media (min-width: 768px) {
+    .eco-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .tech-panel-wide {
+        grid-column: span 2;
+    }
+}
